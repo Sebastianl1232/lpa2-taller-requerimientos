@@ -1,7 +1,7 @@
 # Sistema de Agencia de Viajes
 
-![commits](https://badgen.net/github/commits/UR-CC/lp2-taller1?icon=github) 
-![last_commit](https://img.shields.io/github/last-commit/UR-CC/lp2-taller1)
+![commits](https://badgen.net/github/commits/clubdecomputacion/lpa1-taller-requerimientos?icon=github) 
+![last_commit](https://img.shields.io/github/last-commit/clubdecomputacion/lpa1-taller-requerimientos)
 
 - ver [badgen](https://badgen.net/) o [shields](https://shields.io/) para otros tipos de _badges_
 
@@ -61,29 +61,33 @@ TODO: Crear el diagrama de clases:
 TODO: Corregir la explicación de la instalación - Morbi quam lectus, tempus sit amet mi non, facilisis dignissim erat. Aenean tortor libero, rhoncus eu eleifend ut, volutpat id nisi. Ut porta eros at ante rutrum pharetra. Integer nec nulla dictum, vestibulum ligula id, hendrerit ex. Morbi eget tortor metus.
 
 1. Clonar el proyecto
-```bash
-git clone https://github.com/UR-CC/lpa1-taller-requerimientos.git
-```
+
+    ```bash
+    git clone https://github.com/clubdecomputacion/lpa1-taller-requerimientos.git
+    ```
 
 2. Crear y activar entorno virtual
-```bash
-cd lpa1-taller-requerimientos
-python -m venv venv
-venv/bin/activate
-```
+
+    ```bash
+    cd lpa1-taller-requerimientos
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
 
 3. Instalar librerías y dependencias
-```bash
-pip install -r requirements.txt
-```
+
+    ```bash
+    pip install -r requirements.txt
+    ```
     
 ## Ejecución
 
 TODO: Corregir la explicación de la ejecución - Maecenas sed lorem at arcu varius mollis. Sed eleifend nulla ut blandit interdum. Donec sollicitudin nunc at orci facilisis dignissim. Donec at arcu luctus, commodo magna eget, blandit leo.
 
 1. Ejecutar el proyecto
-```bash
-cd lpa1-taller-requerimientos
-python app.py
-```
+
+    ```bash
+    cd lpa1-taller-requerimientos
+    python3 app.py
+    ```
 
