@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<h2>Listado de habitaciones</h2>
+
+{% if habitaciones %}
+  {% for hab in habitaciones %}
+    <article class="tarjeta">
+      <h3 style="margin-top:0">{{ hab.tipo }} - {{ hab.hotel_nombre }}</h3>
+      <div class="fila">
+        <span><strong>ID:</strong> {{ hab.id }}</span>
+        <span><strong>Hotel ID:</strong> {{ hab.hotel_id }}</span>
+        <span><strong>Capacidad:</strong> {{ hab.capacidad_maxima }}</span>
+        <span><strong>Activo:</strong> {{ hab.activo }}</span>
+      </div>
+      <p><strong>Precio base:</strong> {{ hab.precio_base }}</p>
+      <p><strong>Servicios:</strong> {{ hab.servicios_incluidos | join(', ') }}</p>
+    </article>
+  {% endfor %}
+
+  <div class="paginacion">
+    {% if pagina > 1 %}
+      <a href="/habitaciones?pagina={{ pagina - 1 }}&por_pagina={{ por_pagina }}">Anterior</a>
+    {% endif %}
+
+    {% for p in range(1, total_paginas + 1) %}
+      {% if p == pagina %}
+        <strong>{{ p }}</strong>
+      {% else %}
+        <a href="/habitaciones?pagina={{ p }}&por_pagina={{ por_pagina }}">{{ p }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if pagina < total_paginas %}
+      <a href="/habitaciones?pagina={{ pagina + 1 }}&por_pagina={{ por_pagina }}">Siguiente</a>
+    {% endif %}
+  </div>
+{% else %}
+  <p>No hay habitaciones registradas.</p>
+{% endif %}
+{% endblock %}

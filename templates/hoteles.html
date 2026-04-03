@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<h2>Listado de hoteles</h2>
+
+{% if hoteles %}
+  {% for hotel in hoteles %}
+    <article class="tarjeta">
+      <h3 style="margin-top:0">{{ hotel.nombre }}</h3>
+      <div class="fila">
+        <span><strong>ID:</strong> {{ hotel.id }}</span>
+        <span><strong>Ubicación:</strong> {{ hotel.ubicacion_geografica }}</span>
+        <span><strong>Activo:</strong> {{ hotel.activo }}</span>
+      </div>
+      <p><strong>Dirección:</strong> {{ hotel.direccion }}</p>
+      <p><strong>Servicios:</strong> {{ hotel.descripcion_servicios | join(', ') }}</p>
+    </article>
+  {% endfor %}
+
+  <div class="paginacion">
+    {% if pagina > 1 %}
+      <a href="/?pagina={{ pagina - 1 }}&por_pagina={{ por_pagina }}">Anterior</a>
+    {% endif %}
+
+    {% for p in range(1, total_paginas + 1) %}
+      {% if p == pagina %}
+        <strong>{{ p }}</strong>
+      {% else %}
+        <a href="/?pagina={{ p }}&por_pagina={{ por_pagina }}">{{ p }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if pagina < total_paginas %}
+      <a href="/?pagina={{ pagina + 1 }}&por_pagina={{ por_pagina }}">Siguiente</a>
+    {% endif %}
+  </div>
+{% else %}
+  <p>No hay hoteles registrados.</p>
+{% endif %}
+{% endblock %}

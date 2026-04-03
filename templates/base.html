@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ titulo }} - Agencia</title>
+  <style>
+    :root {
+      --fondo: #f5f7fb;
+      --panel: #ffffff;
+      --texto: #12263a;
+      --suave: #607080;
+      --acento: #0b7285;
+      --borde: #d8e1ea;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: radial-gradient(circle at top left, #eef4ff, #f8fafc 45%, #f7f4ee);
+      color: var(--texto);
+    }
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--borde);
+      padding: 16px;
+      position: sticky;
+      top: 0;
+    }
+    .contenedor {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--acento);
+      font-weight: 700;
+      margin-right: 12px;
+    }
+    .tarjeta {
+      background: var(--panel);
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .fila {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--suave);
+      font-size: 14px;
+    }
+    .paginacion {
+      margin-top: 20px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .paginacion a, .paginacion strong {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--borde);
+      text-decoration: none;
+      background: #fff;
+      color: var(--texto);
+    }
+    .paginacion strong {
+      border-color: var(--acento);
+      background: #e6f7fa;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="contenedor">
+      <h1 style="margin:0">Agencia de Viajes - Portal Web</h1>
+      <nav style="margin-top:8px">
+        <a href="/">Hoteles</a>
+        <a href="/habitaciones">Habitaciones</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    {% block contenido %}{% endblock %}
+  </main>
+</body>
+</html>

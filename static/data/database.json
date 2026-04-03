@@ -1,0 +1,16 @@
+{
+  "hoteles": [],
+  "promociones": [],
+  "habitaciones": [],
+  "clientes": [],
+  "reservas": [],
+  "comentarios": [],
+  "usuarios": [
+    {
+      "nombre_usuario": "admin",
+      "hash_contrasena": "862f0da69349871dd9e784a8a816ba6f305475a8b0760d39c4f960697aa3c5c7",
+      "sal_hex": "2458da4d9efe3e540ccec0db27be2567",
+      "rol": "admin"
+    }
+  ]
+}
