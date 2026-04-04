@@ -7,6 +7,9 @@ import json
 import os
 import re
 import secrets
+import signal
+import threading
+import webbrowser
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timedelta
 from math import ceil
@@ -1091,6 +1094,53 @@ def _paginar(items: List[Dict], pagina: int, por_pagina: int) -> tuple[List[Dict
     return items[inicio:fin], pagina, total_paginas
 
 
+TARIFAS = [
+    {"destino": "Aruba", "pasajes": 418, "silver": 134, "gold": 167, "platinum": 191},
+    {"destino": "Bahamas", "pasajes": 423, "silver": 112, "gold": 183, "platinum": 202},
+    {"destino": "Cancún", "pasajes": 350, "silver": 105, "gold": 142, "platinum": 187},
+    {"destino": "Hawaii", "pasajes": 858, "silver": 210, "gold": 247, "platinum": 291},
+    {"destino": "Jamaica", "pasajes": 380, "silver": 115, "gold": 134, "platinum": 161},
+    {"destino": "Madrid", "pasajes": 496, "silver": 190, "gold": 230, "platinum": 270},
+    {"destino": "Miami", "pasajes": 334, "silver": 122, "gold": 151, "platinum": 183},
+    {"destino": "Moscu", "pasajes": 634, "silver": 131, "gold": 153, "platinum": 167},
+    {"destino": "NewYork", "pasajes": 495, "silver": 104, "gold": 112, "platinum": 210},
+    {"destino": "Panamá", "pasajes": 315, "silver": 119, "gold": 138, "platinum": 175},
+    {"destino": "Paris", "pasajes": 512, "silver": 210, "gold": 260, "platinum": 290},
+    {"destino": "Rome", "pasajes": 478, "silver": 184, "gold": 220, "platinum": 250},
+    {"destino": "Seul", "pasajes": 967, "silver": 205, "gold": 245, "platinum": 265},
+    {"destino": "Sidney", "pasajes": 1045, "silver": 170, "gold": 199, "platinum": 230},
+    {"destino": "Taipei", "pasajes": 912, "silver": 220, "gold": 245, "platinum": 298},
+    {"destino": "Tokio", "pasajes": 989, "silver": 189, "gold": 231, "platinum": 255},
+]
+
+
+def _imagen_para_ubicacion(ubicacion: str) -> str:
+    texto = ubicacion.lower()
+    mapa = {
+        "aruba": "aruba.png",
+        "bahamas": "bahamas.png",
+        "canc": "cancun.png",
+        "hawai": "hawaii.png",
+        "jamaica": "jamaica.png",
+        "madrid": "madrid.png",
+        "miami": "miami.png",
+        "mosc": "moscu.png",
+        "newyork": "newyork.png",
+        "panam": "panama.png",
+        "paris": "paris.png",
+        "rome": "rome.png",
+        "seul": "seul.png",
+        "sidney": "sidney.png",
+        "taipei": "taipei.png",
+        "tokio": "tokio.png",
+    }
+
+    for clave, archivo in mapa.items():
+        if clave in texto:
+            return f"/static/{archivo}"
+    return ""
+
+
 def crear_app_web() -> Flask:
     app = Flask(__name__, template_folder="templates")
     almacen = AlmacenJson(Path("static/data/database.json"))
@@ -1102,7 +1152,12 @@ def crear_app_web() -> Flask:
         por_pagina = request.args.get("por_pagina", default=5, type=int)
         por_pagina = max(1, min(por_pagina, 50))
 
-        hoteles = [asdict(h) for h in sistema.listar_hoteles()]
+        hoteles = []
+        for hotel in sistema.listar_hoteles():
+            fila = asdict(hotel)
+            fila["imagen_url"] = _imagen_para_ubicacion(hotel.ubicacion_geografica)
+            hoteles.append(fila)
+
         hoteles_pagina, pagina, total_paginas = _paginar(hoteles, pagina, por_pagina)
 
         return render_template(
@@ -1122,14 +1177,16 @@ def crear_app_web() -> Flask:
 
         db = sistema._cargar_todo()
         filas_habitaciones = db.get("habitaciones", db.get("habitaciónes", []))
-        hoteles = {h.id: h.nombre for h in sistema.listar_hoteles()}
+        hoteles = {h.id: h for h in sistema.listar_hoteles()}
 
         habitaciones_data: List[Dict] = []
         for fila in filas_habitaciones:
             fila_normalizada = dict(fila)
             if "habitación_id" in fila_normalizada and "habitacion_id" not in fila_normalizada:
                 fila_normalizada["habitacion_id"] = fila_normalizada["habitación_id"]
-            fila_normalizada["hotel_nombre"] = hoteles.get(fila_normalizada.get("hotel_id", ""), "Hotel no encontrado")
+            hotel = hoteles.get(fila_normalizada.get("hotel_id", ""))
+            fila_normalizada["hotel_nombre"] = hotel.nombre if hotel else "Hotel no encontrado"
+            fila_normalizada["imagen_url"] = _imagen_para_ubicacion(hotel.ubicacion_geografica if hotel else "")
             habitaciones_data.append(fila_normalizada)
 
         hab_pagina, pagina, total_paginas = _paginar(habitaciones_data, pagina, por_pagina)
@@ -1143,16 +1200,45 @@ def crear_app_web() -> Flask:
             por_pagina=por_pagina,
         )
 
+    @app.get("/tarifas")
+    def tarifas() -> str:
+        return render_template("tarifas.html", titulo="Tarifas", tarifas=TARIFAS)
+
     return app
 
 
 def ejecutar_web() -> None:
     app = crear_app_web()
+
+    def _instalar_manejadores_salida() -> None:
+        def _on_signal(signum, _frame) -> None:
+            try:
+                nombre = signal.Signals(signum).name
+            except ValueError:
+                nombre = str(signum)
+            print(f"\nSeñal recibida: {nombre}")
+            raise KeyboardInterrupt
+
+        for nombre_senal in ("SIGINT", "SIGTERM", "SIGBREAK"):
+            if hasattr(signal, nombre_senal):
+                signal.signal(getattr(signal, nombre_senal), _on_signal)
+
+    _instalar_manejadores_salida()
+
     print("Servidor web iniciado")
     print("Abre en navegador:")
     print("- http://127.0.0.1:5000/")
     print("- http://127.0.0.1:5000/habitaciones")
-    app.run(debug=True)
+    threading.Timer(1.0, lambda: webbrowser.open("http://127.0.0.1:5000/")).start()
+    try:
+        app.run(debug=False, use_reloader=False)
+    except KeyboardInterrupt:
+        print("Servidor detenido por usuario o por cierre de terminal.")
+    except OSError as exc:
+        print(f"No se pudo iniciar o mantener el servidor: {exc}")
+        raise
+    finally:
+        print("Proceso web finalizado.")
 
 
 if __name__ == "__main__":
