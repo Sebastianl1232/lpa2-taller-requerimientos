@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
 {% block contenido %}
+<section class="banner">
+  <div>
+    <h2 style="margin-top:0">Hoteles y destinos destacados</h2>
+    <p style="margin-bottom:0">Explora el catálogo con paginación, imágenes de los destinos y tarifas oficiales del proyecto.</p>
+  </div>
+  <img src="/static/paris.png" alt="Destino destacado" />
+</section>
+
 <h2>Listado de hoteles</h2>
 
 {% if hoteles %}
   {% for hotel in hoteles %}
     <article class="tarjeta">
+      {% if hotel.imagen_url %}
+        <img src="{{ hotel.imagen_url }}" alt="Imagen de {{ hotel.nombre }}" />
+      {% endif %}
       <h3 style="margin-top:0">{{ hotel.nombre }}</h3>
       <div class="fila">
         <span><strong>ID:</strong> {{ hotel.id }}</span>
@@ -37,4 +48,6 @@
 {% else %}
   <p>No hay hoteles registrados.</p>
 {% endif %}
+
+<p style="margin-top:20px"><a href="/tarifas">Ver tarifas del catálogo</a></p>
 {% endblock %}
