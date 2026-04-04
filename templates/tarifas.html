@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<section class="banner">
+  <div>
+    <h2 style="margin-top:0">Tarifas del catálogo</h2>
+    <p style="margin-bottom:0">Tabla tomada del README del proyecto.</p>
+  </div>
+  <img src="/static/panama.png" alt="Tarifas" />
+</section>
+
+<h2>Precios por destino</h2>
+
+<div class="tarjeta">
+  <table style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="text-align:left; padding:8px; border-bottom:1px solid #d8e1ea;">Destino</th>
+        <th style="text-align:right; padding:8px; border-bottom:1px solid #d8e1ea;">Pasajes</th>
+        <th style="text-align:right; padding:8px; border-bottom:1px solid #d8e1ea;">Silver</th>
+        <th style="text-align:right; padding:8px; border-bottom:1px solid #d8e1ea;">Gold</th>
+        <th style="text-align:right; padding:8px; border-bottom:1px solid #d8e1ea;">Platinum</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tarifa in tarifas %}
+      <tr>
+        <td style="padding:8px; border-bottom:1px solid #eef2f6;">{{ tarifa.destino }}</td>
+        <td style="padding:8px; border-bottom:1px solid #eef2f6; text-align:right;">{{ tarifa.pasajes }}</td>
+        <td style="padding:8px; border-bottom:1px solid #eef2f6; text-align:right;">{{ tarifa.silver }}</td>
+        <td style="padding:8px; border-bottom:1px solid #eef2f6; text-align:right;">{{ tarifa.gold }}</td>
+        <td style="padding:8px; border-bottom:1px solid #eef2f6; text-align:right;">{{ tarifa.platinum }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
