@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
 {% block contenido %}
+<section class="banner">
+  <div>
+    <h2 style="margin-top:0">Habitaciones disponibles</h2>
+    <p style="margin-bottom:0">Revisa cada habitación con su imagen de destino y navega con paginación.</p>
+  </div>
+  <img src="/static/miami.png" alt="Destino destacado" />
+</section>
+
 <h2>Listado de habitaciones</h2>
 
 {% if habitaciones %}
   {% for hab in habitaciones %}
     <article class="tarjeta">
+      {% if hab.imagen_url %}
+        <img src="{{ hab.imagen_url }}" alt="Imagen de {{ hab.hotel_nombre }}" />
+      {% endif %}
       <h3 style="margin-top:0">{{ hab.tipo }} - {{ hab.hotel_nombre }}</h3>
       <div class="fila">
         <span><strong>ID:</strong> {{ hab.id }}</span>
@@ -38,4 +49,6 @@
 {% else %}
   <p>No hay habitaciones registradas.</p>
 {% endif %}
+
+<p style="margin-top:20px"><a href="/tarifas">Ver tarifas del catálogo</a></p>
 {% endblock %}
