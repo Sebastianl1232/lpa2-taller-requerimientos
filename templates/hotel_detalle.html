@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<style>
+  .detalle-wrap {
+    display: grid;
+    gap: 16px;
+  }
+  .info-hotel {
+    background: linear-gradient(160deg, rgba(18, 30, 52, 0.92), rgba(7, 18, 35, 0.85));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 18px;
+    color: #eaf2ff;
+  }
+  .info-hotel p {
+    color: #d5e2f7;
+    margin: 8px 0;
+  }
+  .info-hotel strong {
+    color: #ffffff;
+  }
+</style>
+
+<div style="margin-bottom: 16px;">
+  <a href="/" class="boton-secundario">← Volver a hoteles</a>
+</div>
+
+<section class="banner">
+  <div>
+    <h2 style="margin-top:0">{{ hotel.nombre }}</h2>
+    <p style="margin-bottom:0">{{ hotel.direccion }}</p>
+  </div>
+  {% if imagen_url %}
+    <img src="{{ imagen_url }}" alt="{{ hotel.nombre }}" />
+  {% endif %}
+</section>
+
+<div class="info-hotel" style="margin-bottom: 20px;">
+  <h3 style="margin-top: 0;">Información del Hotel</h3>
+  <p><strong>Ubicación:</strong> {{ hotel.ubicacion_geografica }}</p>
+  <p><strong>Teléfono:</strong> {{ hotel.telefono }}</p>
+  <p><strong>Servicios:</strong> {{ hotel.descripcion_servicios | join(', ') }}</p>
+  <p><strong>Política de pago:</strong> {{ hotel.politica_pago }}</p>
+</div>
+
+<h2>Promociones y Ofertas</h2>
+{% if promociones %}
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 24px;">
+    {% for promo in promociones %}
+      <article class="tarjeta" style="border-left: 4px solid #0b7285;">
+        <h4 style="margin: 0 0 8px 0; color: #0b7285;">{{ promo.nombre }}</h4>
+        <p style="margin: 0 0 8px 0; color: #607080; font-size: 14px;">{{ promo.descripcion }}</p>
+        <div style="background: #e6f7fa; padding: 8px; border-radius: 6px; margin-bottom: 8px; text-align: center;">
+          <span style="font-size: 20px; font-weight: 700; color: #0b7285;">{{ promo.porcentaje_descuento }}% descuento</span>
+        </div>
+        <p style="font-size: 13px; margin: 0 0 8px 0;"><strong>Temporada:</strong> {{ promo.temporada }}</p>
+        <p style="font-size: 13px; margin: 0 0 8px 0;"><strong>Fechas:</strong> {{ promo.fecha_inicio }} a {{ promo.fecha_fin }}</p>
+        <p style="font-size: 13px; margin: 0; color: #607080;"><strong>Incluye:</strong> {{ promo.servicios_adicionales | join(', ') }}</p>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <p style="color: #607080; font-style: italic;">No hay promociones disponibles en este momento.</p>
+{% endif %}
+
+<h2>Habitaciones Disponibles</h2>
+{% if habitaciones %}
+  <div>
+    {% for hab in habitaciones %}
+      <article class="tarjeta">
+        <h3 style="margin-top: 0; color: #0b7285;">{{ hab.tipo }}</h3>
+        <p style="color: #607080; margin: 0 0 12px 0;">{{ hab.descripcion }}</p>
+        
+        <div style="display: grid; grid-template-columns: auto auto auto; gap: 20px; margin-bottom: 12px; padding: 12px; background: #f8fafc; border-radius: 8px;">
+          <div>
+            <span style="display: block; font-size: 12px; color: #607080;">Precio por noche</span>
+            <span style="display: block; font-size: 20px; font-weight: 700; color: #0b7285;">${{ "%.2f"|format(hab.precio_base) }}</span>
+          </div>
+          <div>
+            <span style="display: block; font-size: 12px; color: #607080;">Capacidad máxima</span>
+            <span style="display: block; font-size: 20px; font-weight: 700; color: #0b7285;">{{ hab.capacidad_maxima }} personas</span>
+          </div>
+          <div>
+            <span style="display: block; font-size: 12px; color: #607080;">Estado</span>
+            <span style="display: block; font-size: 14px; font-weight: 700; color: {% if hab.activo %}#00a86b{% else %}#e63946{% endif %};">
+              {% if hab.activo %}✓ Activa{% else %}✗ Inactiva{% endif %}
+            </span>
+          </div>
+        </div>
+
+        <p style="margin: 0 0 6px 0; font-size: 14px;"><strong>Servicios incluidos:</strong></p>
+        <ul style="margin: 0; margin-left: 20px; padding: 0; font-size: 14px; color: #607080;">
+          {% for servicio in hab.servicios_incluidos %}
+            <li>{{ servicio }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <p style="color: #607080; font-style: italic;">No hay habitaciones disponibles en este hotel.</p>
+{% endif %}
+{% endblock %}
