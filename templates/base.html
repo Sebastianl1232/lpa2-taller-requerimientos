@@ -5,71 +5,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{ titulo }} - Agencia</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:wght@600;700&display=swap');
+
     :root {
-      --fondo: #f5f7fb;
-      --panel: #ffffff;
-      --texto: #12263a;
-      --suave: #607080;
-      --acento: #0b7285;
-      --borde: #d8e1ea;
+      --fondo: #07111f;
+      --panel: rgba(10, 17, 32, 0.72);
+      --panel-fuerte: rgba(255, 255, 255, 0.08);
+      --texto: #eef4ff;
+      --suave: #a6b7d1;
+      --acento: #52d6ff;
+      --acento-2: #7c5cff;
+      --borde: rgba(255, 255, 255, 0.12);
+      --sombra: 0 18px 60px rgba(0, 0, 0, 0.35);
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      background: radial-gradient(circle at top left, #eef4ff, #f8fafc 45%, #f7f4ee);
+      font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(82, 214, 255, 0.20), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(124, 92, 255, 0.20), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(0, 220, 200, 0.12), transparent 30%),
+        linear-gradient(180deg, #05101e 0%, #09192b 42%, #07111f 100%);
       color: var(--texto);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 16s ease-in-out infinite;
+    }
+    body::before {
+      left: -120px;
+      top: 120px;
+      background: radial-gradient(circle, rgba(82, 214, 255, 0.9), transparent 68%);
+    }
+    body::after {
+      right: -140px;
+      bottom: 60px;
+      background: radial-gradient(circle, rgba(124, 92, 255, 0.9), transparent 68%);
+      animation-delay: -8s;
     }
     header {
-      background: var(--panel);
-      border-bottom: 1px solid var(--borde);
-      padding: 16px;
+      background: rgba(8, 14, 26, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 18px 16px;
       position: sticky;
       top: 0;
+      backdrop-filter: blur(18px);
+      z-index: 10;
     }
     .contenedor {
-      max-width: 1000px;
+      max-width: 1180px;
       margin: 0 auto;
       padding: 16px;
+      position: relative;
+      z-index: 1;
     }
-    nav a {
-      text-decoration: none;
+    h1 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2rem, 3vw, 3rem);
+      letter-spacing: 0.02em;
+      color: var(--texto);
+    }
+    h2, h3, h4 {
+      font-family: "Space Grotesk", sans-serif;
+      letter-spacing: -0.02em;
+    }
+    main.contenedor {
+      padding-top: 24px;
+      animation: riseIn 700ms ease both;
+    }
+    a {
       color: var(--acento);
-      font-weight: 700;
-      margin-right: 12px;
     }
     .banner {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       gap: 16px;
       align-items: center;
-      background: linear-gradient(135deg, #0b7285, #0f9ba8);
-      color: white;
-      padding: 18px;
-      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(82, 214, 255, 0.16), rgba(124, 92, 255, 0.10)),
+        rgba(10, 17, 32, 0.68);
+      color: var(--texto);
+      padding: 22px;
+      border-radius: 24px;
       margin-bottom: 18px;
       overflow: hidden;
+      border: 1px solid var(--borde);
+      box-shadow: var(--sombra);
+      backdrop-filter: blur(18px);
+      position: relative;
+    }
+    .banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.10) 50%, transparent 100%);
+      transform: translateX(-120%);
+      animation: sheen 8s ease-in-out infinite;
+      pointer-events: none;
     }
     .banner img {
       width: 100%;
-      height: 180px;
+      height: 210px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
     }
     .tarjeta {
-      background: var(--panel);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
       border: 1px solid var(--borde);
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: 20px;
+      padding: 16px;
       margin-bottom: 12px;
+      box-shadow: var(--sombra);
+      backdrop-filter: blur(16px);
+      transform: translateY(0);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      animation: cardIn 520ms ease both;
+    }
+    .tarjeta:hover {
+      transform: translateY(-4px);
+      border-color: rgba(82, 214, 255, 0.45);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
     }
     .tarjeta img {
       width: 100%;
       height: 200px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 16px;
       margin-bottom: 12px;
-      background: #eef3f8;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .fila {
       display: flex;
@@ -77,6 +158,12 @@
       flex-wrap: wrap;
       color: var(--suave);
       font-size: 14px;
+    }
+    .fila span {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .paginacion {
       margin-top: 20px;
@@ -90,12 +177,77 @@
       border-radius: 8px;
       border: 1px solid var(--borde);
       text-decoration: none;
-      background: #fff;
+      background: rgba(255,255,255,0.06);
       color: var(--texto);
     }
     .paginacion strong {
-      border-color: var(--acento);
-      background: #e6f7fa;
+      border-color: rgba(82, 214, 255, 0.55);
+      background: rgba(82, 214, 255, 0.15);
+    }
+    .boton-principal {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--acento), var(--acento-2));
+      color: #05101e;
+      text-decoration: none;
+      font-weight: 700;
+      border: 0;
+      box-shadow: 0 12px 30px rgba(82, 214, 255, 0.22);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .boton-principal:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 16px 36px rgba(82, 214, 255, 0.28);
+    }
+    .boton-secundario {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--texto);
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    thead th {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      color: var(--suave);
+    }
+    th, td {
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    tbody tr:hover td {
+      background: rgba(82, 214, 255, 0.07);
+    }
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(14px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes sheen {
+      0%, 65% { transform: translateX(-120%); }
+      100% { transform: translateX(120%); }
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(16px, -10px, 0) scale(1.06); }
     }
   </style>
 </head>
@@ -103,11 +255,6 @@
   <header>
     <div class="contenedor">
       <h1 style="margin:0">Agencia de Viajes - Portal Web</h1>
-      <nav style="margin-top:8px">
-        <a href="/">Hoteles</a>
-        <a href="/habitaciones">Habitaciones</a>
-        <a href="/tarifas">Tarifas</a>
-      </nav>
     </div>
   </header>
 
