@@ -9,6 +9,7 @@ import re
 import secrets
 import signal
 import threading
+import unicodedata
 import webbrowser
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timedelta
@@ -1141,16 +1142,74 @@ def _imagen_para_ubicacion(ubicacion: str) -> str:
     return ""
 
 
+def _normalizar_texto(texto: str) -> str:
+    base = unicodedata.normalize("NFD", texto or "")
+    sin_tildes = "".join(ch for ch in base if unicodedata.category(ch) != "Mn")
+    return sin_tildes.lower().replace(" ", "")
+
+
+def _tarifa_por_ubicacion(ubicacion: str) -> Optional[Dict]:
+    clave = _normalizar_texto(ubicacion)
+    for tarifa in TARIFAS:
+        if _normalizar_texto(tarifa["destino"]) == clave:
+            return tarifa
+    return None
+
+
+def _habitaciones_tarifa_fallback(hotel_id: str, tarifa: Dict) -> List[Dict]:
+    return [
+        {
+            "id": f"{hotel_id}-silver",
+            "hotel_id": hotel_id,
+            "tipo": "Silver",
+            "descripcion": "Habitacion categoria Silver con tarifa oficial del catalogo.",
+            "precio_base": float(tarifa["silver"]),
+            "servicios_incluidos": ["WiFi", "Bano privado", "Aire acondicionado"],
+            "capacidad_maxima": 2,
+            "fotos": [],
+            "activo": True,
+        },
+        {
+            "id": f"{hotel_id}-gold",
+            "hotel_id": hotel_id,
+            "tipo": "Gold",
+            "descripcion": "Habitacion categoria Gold con tarifa oficial del catalogo.",
+            "precio_base": float(tarifa["gold"]),
+            "servicios_incluidos": ["WiFi premium", "Bano privado", "Minibar", "Desayuno"],
+            "capacidad_maxima": 3,
+            "fotos": [],
+            "activo": True,
+        },
+        {
+            "id": f"{hotel_id}-platinum",
+            "hotel_id": hotel_id,
+            "tipo": "Platinum",
+            "descripcion": "Habitacion categoria Platinum con tarifa oficial del catalogo.",
+            "precio_base": float(tarifa["platinum"]),
+            "servicios_incluidos": ["WiFi premium", "Bano privado", "Jacuzzi", "Room service 24h"],
+            "capacidad_maxima": 4,
+            "fotos": [],
+            "activo": True,
+        },
+    ]
+
+
 def crear_app_web() -> Flask:
     app = Flask(__name__, template_folder="templates")
     almacen = AlmacenJson(Path("static/data/database.json"))
     sistema = SistemaAgenciaViajes(almacen)
 
+    @app.after_request
+    def _sin_cache(response):
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        return response
+
     @app.get("/")
     def inicio() -> str:
-        pagina = request.args.get("pagina", default=1, type=int)
-        por_pagina = request.args.get("por_pagina", default=5, type=int)
-        por_pagina = max(1, min(por_pagina, 50))
+        limite = request.args.get("limite", default=6, type=int)
+        limite = max(6, min(limite, 60))
 
         hoteles = []
         for hotel in sistema.listar_hoteles():
@@ -1158,15 +1217,71 @@ def crear_app_web() -> Flask:
             fila["imagen_url"] = _imagen_para_ubicacion(hotel.ubicacion_geografica)
             hoteles.append(fila)
 
-        hoteles_pagina, pagina, total_paginas = _paginar(hoteles, pagina, por_pagina)
+        hoteles_mostrados = hoteles[:limite]
+        mostrar_mas = limite < len(hoteles)
+        siguiente_limite = min(limite + 6, len(hoteles))
 
         return render_template(
             "hoteles.html",
             titulo="Hoteles",
-            hoteles=hoteles_pagina,
-            pagina=pagina,
-            total_paginas=total_paginas,
-            por_pagina=por_pagina,
+            hoteles=hoteles_mostrados,
+            total_hoteles=len(hoteles),
+            mostrar_mas=mostrar_mas,
+            siguiente_limite=siguiente_limite,
+        )
+
+    @app.get("/hoteles/mas")
+    def mas_hoteles() -> str:
+        inicio = request.args.get("inicio", default=0, type=int)
+        cantidad = request.args.get("cantidad", default=6, type=int)
+        inicio = max(0, inicio)
+        cantidad = max(1, min(cantidad, 60))
+
+        hoteles = []
+        for hotel in sistema.listar_hoteles():
+            fila = asdict(hotel)
+            fila["imagen_url"] = _imagen_para_ubicacion(hotel.ubicacion_geografica)
+            hoteles.append(fila)
+
+        return render_template(
+            "_hotel_cards.html",
+            hoteles=hoteles[inicio : inicio + cantidad],
+        )
+
+    @app.get("/hotel/<hotel_id>")
+    def detalle_hotel(hotel_id: str) -> str:
+        db = sistema._cargar_todo()
+        
+        try:
+            hotel = sistema._buscar_hotel(db, hotel_id)
+        except Exception:
+            return "Hotel no encontrado", 404
+        
+        # Prioriza claves sin acento; si no existen, usa las heredadas.
+        filas_habitaciones = db.get("habitaciones") or db.get("habitaciónes", [])
+        habitaciones_lista = [Habitación(**row) for row in filas_habitaciones if row.get("hotel_id") == hotel_id]
+        habitaciones_data = [asdict(h) for h in habitaciones_lista]
+
+        # Si existe tarifa oficial del destino, mostrar categorias Silver/Gold/Platinum.
+        tarifa = _tarifa_por_ubicacion(hotel.ubicacion_geografica)
+        if tarifa is not None:
+            habitaciones_data = _habitaciones_tarifa_fallback(hotel.id, tarifa)
+        
+        # Obtener promociones del hotel
+        filas_promociones = db.get("promociones") or db.get("promociónes", [])
+        promociones_lista = [Promocion(**row) for row in filas_promociones if row.get("hotel_id") == hotel_id]
+        promociones_data = [asdict(p) for p in promociones_lista]
+        
+        # Obtener imagen del hotel
+        imagen_url = _imagen_para_ubicacion(hotel.ubicacion_geografica)
+        
+        return render_template(
+            "hotel_detalle.html",
+            titulo=hotel.nombre,
+            hotel=asdict(hotel),
+            habitaciones=habitaciones_data,
+            promociones=promociones_data,
+            imagen_url=imagen_url,
         )
 
     @app.get("/habitaciones")
