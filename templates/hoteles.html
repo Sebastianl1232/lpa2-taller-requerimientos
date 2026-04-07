@@ -1,53 +1,161 @@
 {% extends "base.html" %}
 
 {% block contenido %}
+<style>
+  .hotel-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    border-radius: 20px;
+    height: 100%;
+  }
+  .hotel-card-link:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: 4px;
+  }
+  .lista-hoteles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: stretch;
+  }
+  .hotel-tarjeta {
+    padding: 12px;
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 355px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .hotel-tarjeta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, rgba(82, 214, 255, 0.08), transparent 45%, rgba(124, 92, 255, 0.10));
+    pointer-events: none;
+  }
+  .hotel-tarjeta img {
+    height: 150px;
+    margin-bottom: 10px;
+  }
+  .hotel-tarjeta h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+  }
+  .hotel-tarjeta p {
+    margin: 6px 0;
+  }
+  .hotel-tarjeta .direccion,
+  .hotel-tarjeta .servicios {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hotel-tarjeta .fila {
+    font-size: 13px;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .mostrar-mas {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+  }
+  .mostrar-mas button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, var(--acento), var(--acento-2));
+    color: #05101e;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 0;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(82, 214, 255, 0.22);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+  .mostrar-mas button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 28px rgba(82, 214, 255, 0.28);
+  }
+
+  @media (max-width: 780px) {
+    .lista-hoteles {
+      grid-template-columns: 1fr;
+    }
+    .hotel-tarjeta {
+      min-height: 320px;
+    }
+  }
+</style>
+
 <section class="banner">
   <div>
     <h2 style="margin-top:0">Hoteles y destinos destacados</h2>
-    <p style="margin-bottom:0">Explora el catálogo con paginación, imágenes de los destinos y tarifas oficiales del proyecto.</p>
+    <p style="margin-bottom:0">Explora el catálogo con carga progresiva, imágenes de los destinos y acceso directo a cada hotel.</p>
   </div>
   <img src="/static/paris.png" alt="Destino destacado" />
 </section>
 
 <h2>Listado de hoteles</h2>
 
-{% if hoteles %}
-  {% for hotel in hoteles %}
-    <article class="tarjeta">
-      {% if hotel.imagen_url %}
-        <img src="{{ hotel.imagen_url }}" alt="Imagen de {{ hotel.nombre }}" />
-      {% endif %}
-      <h3 style="margin-top:0">{{ hotel.nombre }}</h3>
-      <div class="fila">
-        <span><strong>ID:</strong> {{ hotel.id }}</span>
-        <span><strong>Ubicación:</strong> {{ hotel.ubicacion_geografica }}</span>
-        <span><strong>Activo:</strong> {{ hotel.activo }}</span>
-      </div>
-      <p><strong>Dirección:</strong> {{ hotel.direccion }}</p>
-      <p><strong>Servicios:</strong> {{ hotel.descripcion_servicios | join(', ') }}</p>
-    </article>
-  {% endfor %}
+<div id="lista-hoteles" class="lista-hoteles">
+  {% include "_hotel_cards.html" %}
+</div>
 
-  <div class="paginacion">
-    {% if pagina > 1 %}
-      <a href="/?pagina={{ pagina - 1 }}&por_pagina={{ por_pagina }}">Anterior</a>
-    {% endif %}
-
-    {% for p in range(1, total_paginas + 1) %}
-      {% if p == pagina %}
-        <strong>{{ p }}</strong>
-      {% else %}
-        <a href="/?pagina={{ p }}&por_pagina={{ por_pagina }}">{{ p }}</a>
-      {% endif %}
-    {% endfor %}
-
-    {% if pagina < total_paginas %}
-      <a href="/?pagina={{ pagina + 1 }}&por_pagina={{ por_pagina }}">Siguiente</a>
-    {% endif %}
+{% if mostrar_mas %}
+  <div class="mostrar-mas" id="mas-hotel">
+    <button id="boton-mostrar-mas" type="button" data-inicio="{{ hoteles|length }}" data-cantidad="6" data-total="{{ total_hoteles }}">Mostrar más</button>
   </div>
 {% else %}
-  <p>No hay hoteles registrados.</p>
+  {% if not hoteles %}
+    <p>No hay hoteles registrados.</p>
+  {% endif %}
 {% endif %}
 
-<p style="margin-top:20px"><a href="/tarifas">Ver tarifas del catálogo</a></p>
+<script>
+  (function () {
+    const boton = document.getElementById('boton-mostrar-mas');
+    const contenedor = document.getElementById('lista-hoteles');
+    if (!boton || !contenedor) return;
+
+    boton.addEventListener('click', async () => {
+      const inicio = Number(boton.dataset.inicio || '0');
+      const cantidad = Number(boton.dataset.cantidad || '6');
+      const total = Number(boton.dataset.total || '0');
+      boton.disabled = true;
+      boton.textContent = 'Cargando...';
+
+      try {
+        const respuesta = await fetch(`/hoteles/mas?inicio=${inicio}&cantidad=${cantidad}`, {
+          headers: { 'X-Requested-With': 'fetch' },
+        });
+
+        if (!respuesta.ok) {
+          throw new Error('No se pudo cargar más hoteles');
+        }
+
+        const html = await respuesta.text();
+        contenedor.insertAdjacentHTML('beforeend', html);
+
+        const siguienteInicio = inicio + cantidad;
+        boton.dataset.inicio = String(siguienteInicio);
+        boton.textContent = 'Mostrar más';
+        boton.disabled = false;
+
+        if (siguienteInicio >= total) {
+          boton.closest('.mostrar-mas').remove();
+        }
+      } catch (error) {
+        boton.textContent = 'Mostrar más';
+        boton.disabled = false;
+        console.error(error);
+      }
+    });
+  })();
+</script>
 {% endblock %}
