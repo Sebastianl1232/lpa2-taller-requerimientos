@@ -1,0 +1,17 @@
+{% for hotel in hoteles %}
+  <a class="hotel-card-link" href="/hotel/{{ hotel.id }}" aria-label="Ver detalle de {{ hotel.nombre }}">
+    <article class="tarjeta hotel-tarjeta">
+      {% if hotel.imagen_url %}
+        <img src="{{ hotel.imagen_url }}" alt="Imagen de {{ hotel.nombre }}" />
+      {% endif %}
+      <h3>{{ hotel.nombre }}</h3>
+      <div class="fila">
+        <span><strong>ID:</strong> {{ hotel.id }}</span>
+        <span><strong>Ubicación:</strong> {{ hotel.ubicacion_geografica }}</span>
+        <span><strong>Activo:</strong> {{ hotel.activo }}</span>
+      </div>
+      <p class="direccion"><strong>Dirección:</strong> {{ hotel.direccion }}</p>
+      <p class="servicios"><strong>Servicios:</strong> {{ hotel.descripcion_servicios | join(', ') }}</p>
+    </article>
+  </a>
+{% endfor %}
