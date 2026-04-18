@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<style>
+  .comprobante-wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    display: grid;
+    gap: 12px;
+  }
+  .comprobante-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  @media print {
+    header,
+    .comprobante-actions {
+      display: none !important;
+    }
+    body {
+      background: #fff !important;
+    }
+    .tarjeta {
+      box-shadow: none !important;
+      border: 1px solid #ddd !important;
+    }
+  }
+</style>
+
+<section class="banner">
+  <div>
+    <h2 style="margin-top:0">Comprobante virtual de reserva</h2>
+    <p style="margin-bottom:0">Reserva formalizada y pago confirmado.</p>
+  </div>
+  <img src="/static/paris.png" alt="Comprobante" />
+</section>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div style="display:grid; gap:8px; margin-bottom: 14px;">
+      {% for category, message in messages %}
+        <div style="padding: 10px 12px; border-radius: 10px; border: 1px solid {% if category == 'ok' %}rgba(76, 175, 80, 0.45){% else %}rgba(230, 57, 70, 0.40){% endif %}; background: {% if category == 'ok' %}rgba(76, 175, 80, 0.12){% else %}rgba(230, 57, 70, 0.12){% endif %};">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="comprobante-wrap">
+  <article class="tarjeta">
+    <div class="comprobante-head">
+      <div>
+        <h3 style="margin:0;">Reserva #{{ reserva.id }}</h3>
+        <p style="margin:6px 0 0 0;">Emitido: {{ reserva.creado_en }}</p>
+      </div>
+      <div class="fila">
+        <span>Estado: {{ reserva.estado }}</span>
+        <span>Pago: {{ reserva.pago_estado }}</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="tarjeta">
+    <h3 style="margin-top:0;">Datos del cliente</h3>
+    <p><strong>Nombre:</strong> {{ cliente.nombre_completo }}</p>
+    <p><strong>Correo:</strong> {{ cliente.correo }}</p>
+    <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+    <p><strong>Dirección:</strong> {{ cliente.direccion }}</p>
+  </article>
+
+  <article class="tarjeta">
+    <h3 style="margin-top:0;">Detalle de la reserva</h3>
+    <p><strong>Hotel:</strong> {{ hotel.nombre }}</p>
+    <p><strong>Habitación:</strong> {{ habitacion.tipo }} ({{ habitacion.id }})</p>
+    <p><strong>Fechas:</strong> {{ reserva.fecha_inicio }} a {{ reserva.fecha_fin }}</p>
+    <p><strong>Huéspedes:</strong> {{ reserva.huespedes }}</p>
+    <p><strong>Método de pago:</strong> {{ reserva.metodo_pago }}</p>
+    <p><strong>Total pagado:</strong> ${{ reserva.precio_calculado }}</p>
+  </article>
+
+  <div class="comprobante-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
+    <button class="boton-principal" type="button" onclick="window.print()">Imprimir comprobante</button>
+    <a class="boton-principal" href="/reserva/{{ reserva.id }}/comprobante.pdf">Descargar PDF</a>
+    <a class="boton-secundario" href="/hotel/{{ hotel.id }}">Volver al hotel</a>
+  </div>
+</div>
+{% endblock %}
