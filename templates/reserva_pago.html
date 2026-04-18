@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<section class="banner">
+  <div>
+    <h2 style="margin-top:0">Confirmar pago de reserva</h2>
+    <p style="margin-bottom:0">La reserva queda formalizada solo después de confirmar el pago.</p>
+  </div>
+  <img src="/static/miami.png" alt="Pago" />
+</section>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div style="display:grid; gap:8px; margin-bottom: 14px;">
+      {% for category, message in messages %}
+        <div style="padding: 10px 12px; border-radius: 10px; border: 1px solid {% if category == 'ok' %}rgba(76, 175, 80, 0.45){% else %}rgba(230, 57, 70, 0.40){% endif %}; background: {% if category == 'ok' %}rgba(76, 175, 80, 0.12){% else %}rgba(230, 57, 70, 0.12){% endif %};">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<article class="tarjeta" style="max-width: 860px;">
+  <h3 style="margin-top:0;">Resumen</h3>
+  <div class="fila" style="margin-bottom:8px;">
+    <span>Reserva: {{ reserva.id }}</span>
+    <span>Estado: {{ reserva.estado }}</span>
+    <span>Pago: {{ reserva.pago_estado }}</span>
+  </div>
+  <p><strong>Hotel:</strong> {{ hotel.nombre }}</p>
+  <p><strong>Habitación:</strong> {{ habitacion.tipo }} ({{ habitacion.id }})</p>
+  <p><strong>Fechas:</strong> {{ reserva.fecha_inicio }} a {{ reserva.fecha_fin }}</p>
+  <p><strong>Huéspedes:</strong> {{ reserva.huespedes }}</p>
+  <p><strong>Total:</strong> ${{ reserva.precio_calculado }}</p>
+
+  {% if reserva.estado == "pendiente_pago" %}
+    <form method="post" action="/reserva/{{ reserva.id }}/confirmar-pago" style="margin-top: 12px;">
+      <button class="boton-principal" type="submit">Confirmar pago y formalizar reserva</button>
+    </form>
+  {% else %}
+    <p style="color:#4caf50;"><strong>Esta reserva ya fue formalizada.</strong></p>
+    <a class="boton-principal" href="/reserva/{{ reserva.id }}/comprobante">Ver comprobante</a>
+    <a class="boton-secundario" href="/hotel/{{ hotel.id }}">Volver al hotel</a>
+  {% endif %}
+</article>
+{% endblock %}
