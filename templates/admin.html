@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<style>
+  .admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .admin-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 14px;
+  }
+  .admin-card h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
+  .admin-form {
+    display: grid;
+    gap: 8px;
+  }
+  .admin-form input,
+  .admin-form select,
+  .admin-form textarea {
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: 9px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(8, 14, 26, 0.78);
+    color: var(--texto);
+  }
+  .admin-form textarea {
+    min-height: 72px;
+    resize: vertical;
+  }
+  .admin-btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 0;
+    background: linear-gradient(135deg, var(--acento), var(--acento-2));
+    color: #06111d;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.16);
+    margin: 2px;
+    font-size: 12px;
+  }
+  .flash {
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .flash.ok {
+    background: rgba(38, 191, 120, 0.16);
+    border: 1px solid rgba(38, 191, 120, 0.40);
+  }
+  .flash.error {
+    background: rgba(239, 83, 80, 0.16);
+    border: 1px solid rgba(239, 83, 80, 0.40);
+  }
+  .panel-top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 900px) {
+    .admin-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<h2>Panel Administrativo R1-R15</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="panel-top">
+  {% if admin_logueado %}
+    <span class="badge">Admin autenticado</span>
+    <form method="post" action="/admin/logout">
+      <button class="admin-btn" type="submit">Cerrar sesión</button>
+    </form>
+  {% else %}
+    <form class="admin-form" method="post" action="/admin/login" style="grid-template-columns:1fr 1fr auto; align-items:end;">
+      <div><input name="usuario" placeholder="Usuario" required /></div>
+      <div><input type="password" name="clave" placeholder="Clave" required /></div>
+      <button class="admin-btn" type="submit">Iniciar sesión admin</button>
+    </form>
+  {% endif %}
+</div>
+
+<div class="admin-grid">
+  <section class="admin-card">
+    <h3>R1 Registrar Hotel</h3>
+    <form class="admin-form" method="post" action="/admin/hotel">
+      <input name="nombre" placeholder="Nombre" required />
+      <input name="direccion" placeholder="Dirección" required />
+      <input name="telefono" placeholder="Teléfono" required />
+      <input name="correo" placeholder="Correo" required />
+      <input name="ubicacion" placeholder="Ubicación geográfica" required />
+      <input name="servicios" placeholder="Servicios (coma separados)" required />
+      <input name="fotos" placeholder="Fotos (coma separadas)" required />
+      <button class="admin-btn" type="submit">Guardar hotel</button>
+    </form>
+  </section>
+
+  <section class="admin-card">
+    <h3>R2 Registrar Promoción</h3>
+    <form class="admin-form" method="post" action="/admin/promocion">
+      <input name="hotel_id" placeholder="Hotel ID" required />
+      <input name="nombre" placeholder="Nombre promoción" required />
+      <input name="descripcion" placeholder="Descripción" required />
+      <select name="temporada" required><option>alta</option><option>baja</option></select>
+      <input type="number" step="0.01" name="descuento" placeholder="Descuento %" required />
+      <input name="servicios_extra" placeholder="Servicios extra (coma)" required />
+      <input name="fecha_inicio" placeholder="YYYY-MM-DD" required />
+      <input name="fecha_fin" placeholder="YYYY-MM-DD" required />
+      <button class="admin-btn" type="submit">Guardar promoción</button>
+    </form>
+  </section>
+
+  <section class="admin-card">
+    <h3>R3 Registrar Habitación</h3>
+    <form class="admin-form" method="post" action="/admin/habitacion">
+      <input name="hotel_id" placeholder="Hotel ID" required />
+      <input name="tipo" placeholder="Tipo" required />
+      <textarea name="descripcion" placeholder="Descripción" required></textarea>
+      <input type="number" step="0.01" name="precio_base" placeholder="Precio base" required />
+      <input type="number" name="capacidad" placeholder="Capacidad máxima" required />
+      <input name="servicios" placeholder="Servicios incluidos (coma)" required />
+      <input name="fotos" placeholder="Fotos (coma)" required />
+      <button class="admin-btn" type="submit">Guardar habitación</button>
+    </form>
+  </section>
+
+  <section class="admin-card">
+    <h3>R4 Configurar Políticas</h3>
+    <form class="admin-form" method="post" action="/admin/politicas">
+      <input name="hotel_id" placeholder="Hotel ID" required />
+      <select name="politica_pago" required><option>adelantado</option><option>llegada</option></select>
+      <select name="tipo_reembolso" required><option>total</option><option>parcial</option><option>penalidad</option></select>
+      <input type="number" step="0.01" name="porcentaje_base" placeholder="Porcentaje base" required />
+      <input type="number" step="0.01" name="penalidad_alta" placeholder="Penalidad alta" required />
+      <input type="number" step="0.01" name="penalidad_baja" placeholder="Penalidad baja" required />
+      <input name="penalidades_tipo" placeholder="tipo=15,suite=20" />
+      <button class="admin-btn" type="submit">Actualizar políticas</button>
+    </form>
+  </section>
+
+  <section class="admin-card">
+    <h3>R6 Estados Activo/Inactivo</h3>
+    <form class="admin-form" method="post" action="/admin/estado-hotel">
+      <input name="hotel_id" placeholder="Hotel ID" required />
+      <select name="activo"><option value="true">Activo</option><option value="false">Inactivo</option></select>
+      <button class="admin-btn" type="submit">Cambiar estado hotel</button>
+    </form>
+    <hr style="border-color:rgba(255,255,255,0.12)" />
+    <form class="admin-form" method="post" action="/admin/estado-habitacion">
+      <input name="habitacion_id" placeholder="Habitación ID" required />
+      <select name="activo"><option value="true">Activa</option><option value="false">Inactiva</option></select>
+      <button class="admin-btn" type="submit">Cambiar estado habitación</button>
+    </form>
+  </section>
+
+  <section class="admin-card">
+    <h3>R10 Registrar Cliente</h3>
+    <form class="admin-form" method="post" action="/admin/cliente">
+      <input name="nombre" placeholder="Nombre completo" required />
+      <input name="telefono" placeholder="Teléfono" required />
+      <input name="correo" placeholder="Correo" required />
+      <input name="direccion" placeholder="Dirección" required />
+      <button class="admin-btn" type="submit">Guardar cliente</button>
+    </form>
+  </section>
+
+  <section class="admin-card">
+    <h3>R11-R12 Buscar Habitaciones</h3>
+    <form class="admin-form" method="post" action="/admin/buscar">
+      <input name="fecha_inicio" placeholder="Fecha inicio YYYY-MM-DD" required />
+      <input name="fecha_fin" placeholder="Fecha fin YYYY-MM-DD" required />
+      <input name="ubicacion" placeholder="Ubicación (opcional)" />
+      <input type="number" step="0.01" name="precio_max" placeholder="Precio máximo (opcional)" />
+      <input type="number" step="0.01" name="calificacion_min" placeholder="Calificación mínima (opcional)" />
+      <button class="admin-btn" type="submit">Buscar</button>
+    </form>
+    {% if resultados_busqueda %}
+      <div style="margin-top:10px;">
+        {% for r in resultados_busqueda %}
+          <div class="badge">{{ r.hotel_nombre }} · {{ r.tipo }} · {{ r.precio_estimado }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+
+  <section class="admin-card">
+    <h3>R13 Detalle de Habitación</h3>
+    <form class="admin-form" method="post" action="/admin/detalle-habitacion">
+      <input name="habitacion_id" placeholder="Habitación ID" required />
+      <button class="admin-btn" type="submit">Ver detalle</button>
+    </form>
+    {% if detalle_habitacion %}
+      <div style="margin-top:10px;">
+        <div class="badge">Hotel: {{ detalle_habitacion.hotel.nombre }}</div>
+        <div class="badge">Calificación hab: {{ detalle_habitacion.calificacion_promedio_habitación }}</div>
+      </div>
+      <div style="margin-top: 10px; display: grid; gap: 8px;">
+        <strong>Comentarios:</strong>
+        {% if detalle_habitacion.comentarios %}
+          {% for c in detalle_habitacion.comentarios %}
+            <div style="padding: 8px 10px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);">
+              <div style="font-size: 12px; opacity: 0.85; margin-bottom: 4px;">
+                Puntaje: {{ c.puntaje }}/5 · Fecha: {{ c.fecha }}
+              </div>
+              <div style="font-size: 14px;">{{ c.comentario }}</div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="badge">Sin comentarios para esta habitación</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </section>
+
+  <section class="admin-card">
+    <h3>R14 Reserva y Pago</h3>
+    <form class="admin-form" method="post" action="/admin/reserva">
+      <input name="cliente_id" placeholder="Cliente ID" required />
+      <input name="habitacion_id" placeholder="Habitación ID" required />
+      <input name="fecha_inicio" placeholder="Fecha inicio YYYY-MM-DD" required />
+      <input name="fecha_fin" placeholder="Fecha fin YYYY-MM-DD" required />
+      <input type="number" name="huespedes" placeholder="Huéspedes" required />
+      <input name="metodo_pago" placeholder="Método de pago" required />
+      <button class="admin-btn" type="submit">Crear reserva</button>
+    </form>
+    <hr style="border-color:rgba(255,255,255,0.12)" />
+    <form class="admin-form" method="post" action="/admin/confirmar-pago">
+      <input name="reserva_id" placeholder="Reserva ID" required />
+      <button class="admin-btn" type="submit">Confirmar pago</button>
+    </form>
+  </section>
+
+  <section class="admin-card">
+    <h3>R5 Reembolsos</h3>
+    <form class="admin-form" method="post" action="/admin/cancelar-reserva">
+      <input name="reserva_id" placeholder="Reserva ID" required />
+      <button class="admin-btn" type="submit">Cancelar y reembolsar</button>
+    </form>
+  </section>
+
+  <section class="admin-card">
+    <h3>R8 Calendario de Disponibilidad</h3>
+    <form class="admin-form" method="post" action="/admin/calendario">
+      <input name="habitacion_id" placeholder="Habitación ID" required />
+      <input type="number" name="anio" placeholder="Año" required />
+      <input type="number" name="mes" placeholder="Mes" required />
+      <button class="admin-btn" type="submit">Generar calendario</button>
+    </form>
+    {% if calendario %}
+      <div style="margin-top:10px; max-height:140px; overflow:auto;">
+        {% for fecha, estado in calendario.items() %}
+          <div class="badge">{{ fecha }}: {{ estado }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+
+  <section class="admin-card">
+    <h3>R9 Comentarios y Calificaciones</h3>
+    <form class="admin-form" method="post" action="/admin/comentario">
+      <input name="cliente_id" placeholder="Cliente ID" required />
+      <input name="habitacion_id" placeholder="Habitación ID" required />
+      <input type="number" min="1" max="5" name="puntaje" placeholder="Puntaje 1-5" required />
+      <textarea name="comentario" placeholder="Comentario" required></textarea>
+      <button class="admin-btn" type="submit">Registrar comentario</button>
+    </form>
+  </section>
+</div>
+
+{% endblock %}
