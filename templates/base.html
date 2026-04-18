@@ -8,15 +8,15 @@
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:wght@600;700&display=swap');
 
     :root {
-      --fondo: #07111f;
-      --panel: rgba(10, 17, 32, 0.72);
-      --panel-fuerte: rgba(255, 255, 255, 0.08);
-      --texto: #eef4ff;
-      --suave: #a6b7d1;
-      --acento: #52d6ff;
-      --acento-2: #7c5cff;
-      --borde: rgba(255, 255, 255, 0.12);
-      --sombra: 0 18px 60px rgba(0, 0, 0, 0.35);
+      --fondo: #f7efe6;
+      --panel: rgba(255, 248, 239, 0.86);
+      --panel-fuerte: rgba(255, 255, 255, 0.72);
+      --texto: #4f3b2f;
+      --suave: #8d6f5b;
+      --acento: #d99a6c;
+      --acento-2: #c77d63;
+      --borde: rgba(187, 145, 117, 0.26);
+      --sombra: 0 14px 38px rgba(110, 72, 45, 0.16);
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -24,10 +24,10 @@
       margin: 0;
       font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
       background:
-        radial-gradient(circle at 15% 20%, rgba(82, 214, 255, 0.20), transparent 28%),
-        radial-gradient(circle at 85% 10%, rgba(124, 92, 255, 0.20), transparent 24%),
-        radial-gradient(circle at 50% 100%, rgba(0, 220, 200, 0.12), transparent 30%),
-        linear-gradient(180deg, #05101e 0%, #09192b 42%, #07111f 100%);
+        radial-gradient(circle at 12% 18%, rgba(255, 199, 140, 0.24), transparent 32%),
+        radial-gradient(circle at 86% 8%, rgba(226, 164, 141, 0.20), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(255, 229, 195, 0.16), transparent 36%),
+        linear-gradient(180deg, #fcf7f2 0%, #f8efe6 44%, #f5e9de 100%);
       color: var(--texto);
       min-height: 100vh;
       position: relative;
@@ -50,17 +50,17 @@
     body::before {
       left: -120px;
       top: 120px;
-      background: radial-gradient(circle, rgba(82, 214, 255, 0.9), transparent 68%);
+      background: radial-gradient(circle, rgba(224, 173, 123, 0.60), transparent 68%);
     }
     body::after {
       right: -140px;
       bottom: 60px;
-      background: radial-gradient(circle, rgba(124, 92, 255, 0.9), transparent 68%);
+      background: radial-gradient(circle, rgba(205, 143, 124, 0.55), transparent 68%);
       animation-delay: -8s;
     }
     header {
-      background: rgba(8, 14, 26, 0.78);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 247, 238, 0.86);
+      border-bottom: 1px solid rgba(187, 145, 117, 0.24);
       padding: 18px 16px;
       position: sticky;
       top: 0;
@@ -97,8 +97,8 @@
       gap: 16px;
       align-items: center;
       background:
-        linear-gradient(135deg, rgba(82, 214, 255, 0.16), rgba(124, 92, 255, 0.10)),
-        rgba(10, 17, 32, 0.68);
+        linear-gradient(135deg, rgba(240, 186, 130, 0.22), rgba(226, 168, 146, 0.18)),
+        rgba(255, 248, 240, 0.92);
       color: var(--texto);
       padding: 22px;
       border-radius: 24px;
@@ -127,7 +127,7 @@
       box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
     }
     .tarjeta {
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.68));
       border: 1px solid var(--borde);
       border-radius: 20px;
       padding: 16px;
@@ -140,8 +140,8 @@
     }
     .tarjeta:hover {
       transform: translateY(-4px);
-      border-color: rgba(82, 214, 255, 0.45);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+      border-color: rgba(217, 154, 108, 0.48);
+      box-shadow: 0 22px 50px rgba(110, 72, 45, 0.20);
     }
     .tarjeta img {
       width: 100%;
@@ -162,8 +162,8 @@
     .fila span {
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255, 252, 249, 0.70);
+      border: 1px solid rgba(187, 145, 117, 0.20);
     }
     .paginacion {
       margin-top: 20px;
@@ -177,12 +177,12 @@
       border-radius: 8px;
       border: 1px solid var(--borde);
       text-decoration: none;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.70);
       color: var(--texto);
     }
     .paginacion strong {
-      border-color: rgba(82, 214, 255, 0.55);
-      background: rgba(82, 214, 255, 0.15);
+      border-color: rgba(217, 154, 108, 0.55);
+      background: rgba(217, 154, 108, 0.20);
     }
     .boton-principal {
       display: inline-flex;
@@ -191,16 +191,16 @@
       padding: 10px 16px;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--acento), var(--acento-2));
-      color: #05101e;
+      color: #362015;
       text-decoration: none;
       font-weight: 700;
       border: 0;
-      box-shadow: 0 12px 30px rgba(82, 214, 255, 0.22);
+      box-shadow: 0 10px 24px rgba(174, 112, 88, 0.20);
       transition: transform 180ms ease, box-shadow 180ms ease;
     }
     .boton-principal:hover {
       transform: translateY(-1px) scale(1.01);
-      box-shadow: 0 16px 36px rgba(82, 214, 255, 0.28);
+      box-shadow: 0 14px 30px rgba(174, 112, 88, 0.26);
     }
     .boton-secundario {
       display: inline-flex;
@@ -208,11 +208,11 @@
       gap: 8px;
       padding: 10px 16px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.72);
       color: var(--texto);
       text-decoration: none;
       font-weight: 700;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(187, 145, 117, 0.22);
     }
     table {
       width: 100%;
@@ -227,11 +227,11 @@
       color: var(--suave);
     }
     th, td {
-      background: rgba(255,255,255,0.04);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.68);
+      border-bottom: 1px solid rgba(187, 145, 117, 0.20);
     }
     tbody tr:hover td {
-      background: rgba(82, 214, 255, 0.07);
+      background: rgba(217, 154, 108, 0.14);
     }
     @keyframes riseIn {
       from { opacity: 0; transform: translateY(12px); }
