@@ -1,6 +1,7 @@
 ﻿from __future__ import annotations
 
 import base64
+import io
 import hashlib
 import hmac
 import json
@@ -18,11 +19,13 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from uuid import uuid4
 
-from flask import Flask, render_template, request
+from flask import Flask, flash, redirect, render_template, request, send_file, session, url_for
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 
 # ================= VALIDACIONES BÁSICAS =================
-PATRON_EMAIL = re.compile(r"^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$")
+PATRON_EMAIL = re.compile(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$")
 PATRON_TELEFONO = re.compile(r"^[+]?\d[\d\s\-]{6,}$")
 FORMATO_FECHA = "%Y-%m-%d"
 
@@ -184,8 +187,8 @@ class AlmacenJson:
     def _default_schema(self) -> Dict:
         return {
             "hoteles": [],
-            "promociónes": [],
-            "habitaciónes": [],
+            "promociones": [],
+            "habitaciones": [],
             "clientes": [],
             "reservas": [],
             "comentarios": [],
@@ -212,6 +215,24 @@ class SistemaAgenciaViajes:
     def _guardar_todo(self, db: Dict) -> None:
         self.almacen.write(db)
 
+    def _filas_habitaciones(self, db: Dict) -> List[Dict]:
+        if isinstance(db.get("habitaciones"), list):
+            return db["habitaciones"]
+        if isinstance(db.get("habitaciónes"), list):
+            db["habitaciones"] = db["habitaciónes"]
+            return db["habitaciones"]
+        db["habitaciones"] = []
+        return db["habitaciones"]
+
+    def _filas_promociones(self, db: Dict) -> List[Dict]:
+        if isinstance(db.get("promociones"), list):
+            return db["promociones"]
+        if isinstance(db.get("promociónes"), list):
+            db["promociones"] = db["promociónes"]
+            return db["promociones"]
+        db["promociones"] = []
+        return db["promociones"]
+
     def _parsear_fecha(self, value: str) -> date:
         try:
             return datetime.strptime(value, FORMATO_FECHA).date()
@@ -233,7 +254,7 @@ class SistemaAgenciaViajes:
         raise ErrorNegocio("Hotel no encontrado")
 
     def _buscar_habitación(self, db: Dict, habitación_id: str) -> Habitación:
-        for item in db["habitaciónes"]:
+        for item in self._filas_habitaciones(db):
             if item["id"] == habitación_id:
                 return Habitación(**item)
         raise ErrorNegocio("Habitación no encontrada")
@@ -389,7 +410,7 @@ class SistemaAgenciaViajes:
             activa=True,
         )
 
-        db["promociónes"].append(asdict(promo))
+        self._filas_promociones(db).append(asdict(promo))
         self._guardar_todo(db)
         return promo
 
@@ -432,7 +453,7 @@ class SistemaAgenciaViajes:
             activo=True,
         )
 
-        db["habitaciónes"].append(asdict(habitación))
+        self._filas_habitaciones(db).append(asdict(habitación))
         self._guardar_todo(db)
         return habitación
 
@@ -532,7 +553,7 @@ class SistemaAgenciaViajes:
         db = self._cargar_todo()
         habitación = self._buscar_habitación(db, habitación_id)
         habitación.activo = bool(activo)
-        self._actualizar_entidad(db["habitaciónes"], habitación.id, asdict(habitación))
+        self._actualizar_entidad(self._filas_habitaciones(db), habitación.id, asdict(habitación))
         self._guardar_todo(db)
         return habitación
 
@@ -646,7 +667,7 @@ class SistemaAgenciaViajes:
         if not PATRON_TELEFONO.match(telefono.strip()):
             raise ErrorNegocio("Teléfono inválido")
         if not PATRON_EMAIL.match(correo.strip()):
-            raise ErrorNegocio("Correo inválido")
+            raise ErrorNegocio("Correo inválido. Usa formato nombre@dominio.com")
         if not direccion.strip():
             raise ErrorNegocio("Dirección obligatoria")
 
@@ -689,7 +710,7 @@ class SistemaAgenciaViajes:
 
             hotel_rating = self.promedio_hotel(hotel.id)
 
-            for r_row in db["habitaciónes"]:
+            for r_row in self._filas_habitaciones(db):
                 habitación = Habitación(**r_row)
                 if habitación.hotel_id != hotel.id:
                     continue
@@ -826,7 +847,7 @@ class SistemaAgenciaViajes:
 
     def listar_habitaciónes_por_hotel(self, hotel_id: str) -> List[Habitación]:
         db = self._cargar_todo()
-        return [Habitación(**row) for row in db["habitaciónes"] if row["hotel_id"] == hotel_id]
+        return [Habitación(**row) for row in self._filas_habitaciones(db) if row["hotel_id"] == hotel_id]
 
 
 # ================= CLI =================
@@ -1142,6 +1163,41 @@ def _imagen_para_ubicacion(ubicacion: str) -> str:
     return ""
 
 
+def _url_foto_habitacion(foto: str, ubicacion_hotel: str) -> str:
+    valor = (foto or "").strip()
+    if not valor:
+        return _imagen_para_ubicacion(ubicacion_hotel)
+    if valor.startswith("http://") or valor.startswith("https://") or valor.startswith("/static/"):
+        return valor
+    return f"/static/{valor}"
+
+
+def _estado_habitacion(activo: bool) -> str:
+    return "Activa" if activo else "Agotada"
+
+
+def _estado_habitacion_para_fechas(
+    sistema: "SistemaAgenciaViajes",
+    db: Dict,
+    habitación: Habitación,
+    fecha_inicio: Optional[str] = None,
+    fecha_fin: Optional[str] = None,
+) -> str:
+    if not habitación.activo:
+        return "Agotada"
+
+    if fecha_inicio and fecha_fin:
+        try:
+            inicio = sistema._parsear_fecha(fecha_inicio)
+            fin = sistema._parsear_fecha(fecha_fin)
+            if inicio <= fin and not sistema._esta_habitación_disponible(db, habitación.id, inicio, fin):
+                return "Reservada para esas fechas"
+        except Exception:
+            pass
+
+    return "Activa"
+
+
 def _normalizar_texto(texto: str) -> str:
     base = unicodedata.normalize("NFD", texto or "")
     sin_tildes = "".join(ch for ch in base if unicodedata.category(ch) != "Mn")
@@ -1196,8 +1252,32 @@ def _habitaciones_tarifa_fallback(hotel_id: str, tarifa: Dict) -> List[Dict]:
 
 def crear_app_web() -> Flask:
     app = Flask(__name__, template_folder="templates")
+    app.secret_key = os.getenv("APP_SECRET", "lpa2-demo-secret")
+    app.config.update(
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE="Lax",
+        SESSION_COOKIE_SECURE=False,
+        PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
+    )
     almacen = AlmacenJson(Path("static/data/database.json"))
     sistema = SistemaAgenciaViajes(almacen)
+
+    def _token_admin_web() -> str:
+        return str(session.get("admin_token", ""))
+
+    def _parsear_lista_csv(valor: str) -> List[str]:
+        if not valor.strip():
+            return []
+        return [x.strip() for x in valor.split(",") if x.strip()]
+
+    def _parsear_mapa_penalidades(texto: str) -> Dict[str, float]:
+        mapa: Dict[str, float] = {}
+        for parte in [p.strip() for p in texto.split(",") if p.strip()]:
+            if "=" not in parte:
+                continue
+            clave, valor = parte.split("=", maxsplit=1)
+            mapa[clave.strip()] = float(valor.strip())
+        return mapa
 
     @app.after_request
     def _sin_cache(response):
@@ -1205,6 +1285,10 @@ def crear_app_web() -> Flask:
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
         return response
+
+    @app.before_request
+    def _sesion_permanente() -> None:
+        session.permanent = True
 
     @app.get("/")
     def inicio() -> str:
@@ -1228,6 +1312,60 @@ def crear_app_web() -> Flask:
             total_hoteles=len(hoteles),
             mostrar_mas=mostrar_mas,
             siguiente_limite=siguiente_limite,
+        )
+
+    @app.route("/buscar", methods=["GET", "POST"])
+    def buscar_publico() -> str:
+        if request.method == "POST":
+            params = {
+                "fecha_inicio": request.form.get("fecha_inicio", "").strip(),
+                "fecha_fin": request.form.get("fecha_fin", "").strip(),
+                "ubicacion": request.form.get("ubicacion", "").strip(),
+                "precio_max": request.form.get("precio_max", "").strip(),
+                "calificacion_min": request.form.get("calificacion_min", "").strip(),
+            }
+            return redirect(url_for("buscar_publico", **params))
+
+        fecha_inicio = request.args.get("fecha_inicio", "").strip()
+        fecha_fin = request.args.get("fecha_fin", "").strip()
+        ubicacion = request.args.get("ubicacion", "").strip()
+        precio_max_txt = request.args.get("precio_max", "").strip()
+        calificacion_min_txt = request.args.get("calificacion_min", "").strip()
+
+        resultados: List[Dict] = []
+        error_busqueda = ""
+
+        if fecha_inicio and fecha_fin:
+            try:
+                precio_max = float(precio_max_txt) if precio_max_txt else None
+                calificacion_min = float(calificacion_min_txt) if calificacion_min_txt else None
+                resultados = sistema.buscar_habitaciónes(
+                    fecha_inicio,
+                    fecha_fin,
+                    ubicacion or None,
+                    precio_max,
+                    calificacion_min,
+                )
+
+                hoteles_por_id = {h.id: h for h in sistema.listar_hoteles()}
+                for item in resultados:
+                    hotel_item = hoteles_por_id.get(item["hotel_id"])
+                    item["imagen_url"] = _imagen_para_ubicacion(hotel_item.ubicacion_geografica if hotel_item else "")
+            except Exception as exc:  # noqa: BLE001
+                error_busqueda = str(exc)
+
+        return render_template(
+            "busqueda.html",
+            titulo="Búsqueda de habitaciones",
+            resultados=resultados,
+            error_busqueda=error_busqueda,
+            filtros={
+                "fecha_inicio": fecha_inicio,
+                "fecha_fin": fecha_fin,
+                "ubicacion": ubicacion,
+                "precio_max": precio_max_txt,
+                "calificacion_min": calificacion_min_txt,
+            },
         )
 
     @app.get("/hoteles/mas")
@@ -1260,12 +1398,38 @@ def crear_app_web() -> Flask:
         # Prioriza claves sin acento; si no existen, usa las heredadas.
         filas_habitaciones = db.get("habitaciones") or db.get("habitaciónes", [])
         habitaciones_lista = [Habitación(**row) for row in filas_habitaciones if row.get("hotel_id") == hotel_id]
-        habitaciones_data = [asdict(h) for h in habitaciones_lista]
+        comentarios = db.get("comentarios", [])
+        fecha_inicio = request.args.get("fecha_inicio", "").strip()
+        fecha_fin = request.args.get("fecha_fin", "").strip()
+        comentarios_por_habitacion: Dict[str, List[Dict]] = {}
+        for comentario in comentarios:
+            key = comentario.get("habitación_id", "")
+            comentarios_por_habitacion.setdefault(key, []).append(comentario)
 
-        # Si existe tarifa oficial del destino, mostrar categorias Silver/Gold/Platinum.
+        habitaciones_data: List[Dict] = []
+        for h in habitaciones_lista:
+            fila = asdict(h)
+            fila["fotos_urls"] = [_url_foto_habitacion(f, hotel.ubicacion_geografica) for f in h.fotos]
+            fila["calificacion_promedio"] = sistema.promedio_habitación(h.id)
+            fila["comentarios"] = comentarios_por_habitacion.get(h.id, [])
+            fila["estado_texto"] = _estado_habitacion_para_fechas(sistema, db, h, fecha_inicio, fecha_fin)
+            habitaciones_data.append(fila)
+
+        habitaciones_reservables = [
+            {"id": h.id, "tipo": h.tipo, "activo": h.activo}
+            for h in habitaciones_lista
+            if h.activo
+        ]
+
+        # Si no hay habitaciones registradas y existe tarifa oficial del destino, mostrar categorias base.
         tarifa = _tarifa_por_ubicacion(hotel.ubicacion_geografica)
-        if tarifa is not None:
+        if not habitaciones_data and tarifa is not None:
             habitaciones_data = _habitaciones_tarifa_fallback(hotel.id, tarifa)
+            for fila in habitaciones_data:
+                fila["fotos_urls"] = [_imagen_para_ubicacion(hotel.ubicacion_geografica)]
+                fila["calificacion_promedio"] = 0.0
+                fila["comentarios"] = []
+                fila["estado_texto"] = "Activa"
         
         # Obtener promociones del hotel
         filas_promociones = db.get("promociones") or db.get("promociónes", [])
@@ -1279,10 +1443,178 @@ def crear_app_web() -> Flask:
             "hotel_detalle.html",
             titulo=hotel.nombre,
             hotel=asdict(hotel),
+            calificacion_hotel=sistema.promedio_hotel(hotel.id),
             habitaciones=habitaciones_data,
+            habitaciones_reservables=habitaciones_reservables,
             promociones=promociones_data,
             imagen_url=imagen_url,
         )
+
+    @app.post("/hotel/<hotel_id>/reservar")
+    def reservar_hotel(hotel_id: str) -> str:
+        try:
+            db = sistema._cargar_todo()
+            _ = sistema._buscar_hotel(db, hotel_id)
+
+            habitacion_id = request.form.get("habitacion_id", "").strip()
+            habitacion = sistema._buscar_habitación(db, habitacion_id)
+            if habitacion.hotel_id != hotel_id:
+                raise ErrorNegocio("La habitacion seleccionada no pertenece a este hotel")
+
+            cliente = sistema.registrar_cliente(
+                request.form.get("nombre", "").strip(),
+                request.form.get("telefono", "").strip(),
+                request.form.get("correo", "").strip(),
+                request.form.get("direccion", "").strip(),
+            )
+
+            reserva = sistema.crear_reserva(
+                cliente.id,
+                habitacion_id,
+                request.form.get("fecha_inicio", "").strip(),
+                request.form.get("fecha_fin", "").strip(),
+                int(request.form.get("huespedes", "1") or 1),
+                request.form.get("metodo_pago", "tarjeta").strip() or "tarjeta",
+            )
+            flash("Reserva creada. Falta confirmar pago para formalizarla.", "ok")
+            return redirect(url_for("pago_reserva", reserva_id=reserva.id))
+        except Exception as exc:  # noqa: BLE001
+            flash(f"No se pudo completar la reserva: {exc}", "error")
+
+        return redirect(url_for("detalle_hotel", hotel_id=hotel_id))
+
+    @app.get("/reserva/<reserva_id>/pago")
+    def pago_reserva(reserva_id: str) -> str:
+        try:
+            db = sistema._cargar_todo()
+            reserva = sistema._buscar_reserva(db, reserva_id)
+            hotel = sistema._buscar_hotel(db, reserva.hotel_id)
+            habitacion = sistema._buscar_habitación(db, reserva.habitación_id)
+            return render_template(
+                "reserva_pago.html",
+                titulo="Confirmación de pago",
+                reserva=asdict(reserva),
+                hotel=asdict(hotel),
+                habitacion=asdict(habitacion),
+            )
+        except Exception as exc:  # noqa: BLE001
+            flash(f"No se pudo abrir el pago: {exc}", "error")
+            return redirect(url_for("inicio"))
+
+    @app.post("/reserva/<reserva_id>/confirmar-pago")
+    def confirmar_pago_publico(reserva_id: str) -> str:
+        try:
+            reserva = sistema.confirmar_pago(reserva_id)
+            flash(f"Pago confirmado. Reserva formalizada: {reserva.id}", "ok")
+            return redirect(url_for("comprobante_reserva", reserva_id=reserva.id))
+        except Exception as exc:  # noqa: BLE001
+            flash(f"No se pudo confirmar el pago: {exc}", "error")
+            return redirect(url_for("pago_reserva", reserva_id=reserva_id))
+
+    @app.get("/reserva/<reserva_id>/comprobante")
+    def comprobante_reserva(reserva_id: str) -> str:
+        try:
+            db = sistema._cargar_todo()
+            reserva = sistema._buscar_reserva(db, reserva_id)
+            if reserva.estado != "confirmada" or reserva.pago_estado != "confirmado":
+                raise ErrorNegocio("La reserva aun no tiene pago confirmado")
+
+            hotel = sistema._buscar_hotel(db, reserva.hotel_id)
+            habitacion = sistema._buscar_habitación(db, reserva.habitación_id)
+            cliente = sistema._buscar_cliente(db, reserva.cliente_id)
+
+            return render_template(
+                "reserva_comprobante.html",
+                titulo="Comprobante de reserva",
+                reserva=asdict(reserva),
+                hotel=asdict(hotel),
+                habitacion=asdict(habitacion),
+                cliente={
+                    "id": cliente.id,
+                    "nombre_completo": cliente.nombre_completo,
+                    "telefono": cliente.telefono,
+                    "correo": desencriptar_texto(cliente.correo_encriptado),
+                    "direccion": cliente.direccion,
+                },
+            )
+        except Exception as exc:  # noqa: BLE001
+            flash(f"No se pudo generar el comprobante: {exc}", "error")
+            return redirect(url_for("pago_reserva", reserva_id=reserva_id))
+
+    @app.get("/reserva/<reserva_id>/comprobante.pdf")
+    def comprobante_reserva_pdf(reserva_id: str):
+        try:
+            db = sistema._cargar_todo()
+            reserva = sistema._buscar_reserva(db, reserva_id)
+            if reserva.estado != "confirmada" or reserva.pago_estado != "confirmado":
+                raise ErrorNegocio("La reserva aun no tiene pago confirmado")
+
+            hotel = sistema._buscar_hotel(db, reserva.hotel_id)
+            habitacion = sistema._buscar_habitación(db, reserva.habitación_id)
+            cliente = sistema._buscar_cliente(db, reserva.cliente_id)
+            correo = desencriptar_texto(cliente.correo_encriptado)
+
+            buffer = io.BytesIO()
+            pdf = canvas.Canvas(buffer, pagesize=letter)
+            ancho, alto = letter
+            y = alto - 48
+
+            pdf.setTitle(f"Comprobante {reserva.id}")
+            pdf.setFont("Helvetica-Bold", 18)
+            pdf.drawString(48, y, "Comprobante de Reserva")
+            y -= 26
+
+            pdf.setFont("Helvetica", 11)
+            pdf.drawString(48, y, f"Reserva ID: {reserva.id}")
+            y -= 16
+            pdf.drawString(48, y, f"Emitido: {reserva.creado_en}")
+            y -= 16
+            pdf.drawString(48, y, f"Estado: {reserva.estado} | Pago: {reserva.pago_estado}")
+            y -= 26
+
+            pdf.setFont("Helvetica-Bold", 13)
+            pdf.drawString(48, y, "Datos del Cliente")
+            y -= 18
+            pdf.setFont("Helvetica", 11)
+            pdf.drawString(48, y, f"Nombre: {cliente.nombre_completo}")
+            y -= 16
+            pdf.drawString(48, y, f"Correo: {correo}")
+            y -= 16
+            pdf.drawString(48, y, f"Telefono: {cliente.telefono}")
+            y -= 16
+            pdf.drawString(48, y, f"Direccion: {cliente.direccion}")
+            y -= 26
+
+            pdf.setFont("Helvetica-Bold", 13)
+            pdf.drawString(48, y, "Detalle de la Reserva")
+            y -= 18
+            pdf.setFont("Helvetica", 11)
+            pdf.drawString(48, y, f"Hotel: {hotel.nombre}")
+            y -= 16
+            pdf.drawString(48, y, f"Habitacion: {habitacion.tipo} ({habitacion.id})")
+            y -= 16
+            pdf.drawString(48, y, f"Fechas: {reserva.fecha_inicio} a {reserva.fecha_fin}")
+            y -= 16
+            pdf.drawString(48, y, f"Huespedes: {reserva.huespedes}")
+            y -= 16
+            pdf.drawString(48, y, f"Metodo de pago: {reserva.metodo_pago}")
+            y -= 16
+            pdf.setFont("Helvetica-Bold", 12)
+            pdf.drawString(48, y, f"Total pagado: ${reserva.precio_calculado}")
+
+            pdf.showPage()
+            pdf.save()
+            buffer.seek(0)
+
+            return send_file(
+                buffer,
+                mimetype="application/pdf",
+                as_attachment=True,
+                download_name=f"comprobante_{reserva.id}.pdf",
+            )
+        except Exception as exc:  # noqa: BLE001
+            flash(f"No se pudo descargar el comprobante PDF: {exc}", "error")
+            return redirect(url_for("comprobante_reserva", reserva_id=reserva_id))
 
     @app.get("/habitaciones")
     def habitaciones() -> str:
@@ -1302,6 +1634,7 @@ def crear_app_web() -> Flask:
             hotel = hoteles.get(fila_normalizada.get("hotel_id", ""))
             fila_normalizada["hotel_nombre"] = hotel.nombre if hotel else "Hotel no encontrado"
             fila_normalizada["imagen_url"] = _imagen_para_ubicacion(hotel.ubicacion_geografica if hotel else "")
+            fila_normalizada["estado_texto"] = _estado_habitacion(bool(fila_normalizada.get("activo", False)))
             habitaciones_data.append(fila_normalizada)
 
         hab_pagina, pagina, total_paginas = _paginar(habitaciones_data, pagina, por_pagina)
@@ -1318,6 +1651,254 @@ def crear_app_web() -> Flask:
     @app.get("/tarifas")
     def tarifas() -> str:
         return render_template("tarifas.html", titulo="Tarifas", tarifas=TARIFAS)
+
+    @app.get("/admin")
+    def admin() -> str:
+        db = sistema._cargar_todo()
+        habitaciones = sistema._filas_habitaciones(db)
+        promociones = sistema._filas_promociones(db)
+        return render_template(
+            "admin.html",
+            titulo="Panel Admin",
+            admin_logueado=bool(_token_admin_web()),
+            hoteles=sistema.listar_hoteles(),
+            habitaciones=habitaciones,
+            promociones=promociones,
+            clientes=db.get("clientes", []),
+            reservas=db.get("reservas", []),
+            resultados_busqueda=session.pop("admin_resultados_busqueda", []),
+            calendario=session.pop("admin_calendario", {}),
+            detalle_habitacion=session.pop("admin_detalle_habitacion", {}),
+        )
+
+    @app.post("/admin/login")
+    def admin_login() -> str:
+        try:
+            token = sistema.iniciar_sesión(
+                request.form.get("usuario", "").strip(),
+                request.form.get("clave", "").strip(),
+            )
+            session["admin_token"] = token
+            flash("Sesion admin iniciada", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"No se pudo iniciar sesion: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/logout")
+    def admin_logout() -> str:
+        session.pop("admin_token", None)
+        flash("Sesion cerrada", "ok")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/hotel")
+    def admin_hotel() -> str:
+        try:
+            token = _token_admin_web()
+            hotel = sistema.registrar_hotel(
+                token,
+                request.form.get("nombre", ""),
+                request.form.get("direccion", ""),
+                request.form.get("telefono", ""),
+                request.form.get("correo", ""),
+                request.form.get("ubicacion", ""),
+                _parsear_lista_csv(request.form.get("servicios", "")),
+                _parsear_lista_csv(request.form.get("fotos", "")),
+            )
+            flash(f"Hotel registrado: {hotel.nombre}", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error registrando hotel: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/promocion")
+    def admin_promocion() -> str:
+        try:
+            token = _token_admin_web()
+            promo = sistema.registrar_promoción(
+                token,
+                request.form.get("hotel_id", "").strip(),
+                request.form.get("nombre", ""),
+                request.form.get("descripcion", ""),
+                request.form.get("temporada", ""),
+                float(request.form.get("descuento", "0") or 0),
+                _parsear_lista_csv(request.form.get("servicios_extra", "")),
+                request.form.get("fecha_inicio", ""),
+                request.form.get("fecha_fin", ""),
+            )
+            flash(f"Promocion registrada: {promo.nombre}", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error registrando promocion: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/habitacion")
+    def admin_habitacion() -> str:
+        try:
+            token = _token_admin_web()
+            habitacion = sistema.registrar_habitación(
+                token,
+                request.form.get("hotel_id", "").strip(),
+                request.form.get("tipo", ""),
+                request.form.get("descripcion", ""),
+                float(request.form.get("precio_base", "0") or 0),
+                _parsear_lista_csv(request.form.get("servicios", "")),
+                int(request.form.get("capacidad", "1") or 1),
+                _parsear_lista_csv(request.form.get("fotos", "")),
+            )
+            flash(f"Habitacion registrada: {habitacion.id}", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error registrando habitacion: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/politicas")
+    def admin_politicas() -> str:
+        try:
+            token = _token_admin_web()
+            sistema.configurar_politicas(
+                token,
+                request.form.get("hotel_id", "").strip(),
+                request.form.get("politica_pago", ""),
+                request.form.get("tipo_reembolso", ""),
+                float(request.form.get("porcentaje_base", "0") or 0),
+                float(request.form.get("penalidad_alta", "0") or 0),
+                float(request.form.get("penalidad_baja", "0") or 0),
+                _parsear_mapa_penalidades(request.form.get("penalidades_tipo", "")),
+            )
+            flash("Politicas actualizadas", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error configurando politicas: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/estado-hotel")
+    def admin_estado_hotel() -> str:
+        try:
+            token = _token_admin_web()
+            sistema.cambiar_estado_hotel(
+                token,
+                request.form.get("hotel_id", "").strip(),
+                request.form.get("activo", "false").lower() == "true",
+            )
+            flash("Estado de hotel actualizado", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error cambiando estado hotel: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/estado-habitacion")
+    def admin_estado_habitacion() -> str:
+        try:
+            token = _token_admin_web()
+            sistema.cambiar_estado_habitación(
+                token,
+                request.form.get("habitacion_id", "").strip(),
+                request.form.get("activo", "false").lower() == "true",
+            )
+            flash("Estado de habitacion actualizado", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error cambiando estado habitacion: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/cliente")
+    def admin_cliente() -> str:
+        try:
+            cliente = sistema.registrar_cliente(
+                request.form.get("nombre", ""),
+                request.form.get("telefono", ""),
+                request.form.get("correo", ""),
+                request.form.get("direccion", ""),
+            )
+            flash(f"Cliente registrado: {cliente.id}", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error registrando cliente: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/buscar")
+    def admin_buscar() -> str:
+        try:
+            resultados = sistema.buscar_habitaciónes(
+                request.form.get("fecha_inicio", ""),
+                request.form.get("fecha_fin", ""),
+                request.form.get("ubicacion", "").strip() or None,
+                float(request.form.get("precio_max", "0") or 0) if request.form.get("precio_max", "").strip() else None,
+                float(request.form.get("calificacion_min", "0") or 0) if request.form.get("calificacion_min", "").strip() else None,
+            )
+            session["admin_resultados_busqueda"] = resultados
+            flash(f"Busqueda completada: {len(resultados)} resultado(s)", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error en busqueda: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/detalle-habitacion")
+    def admin_detalle_habitacion() -> str:
+        try:
+            detalle = sistema.detalle_habitación(request.form.get("habitacion_id", "").strip())
+            session["admin_detalle_habitacion"] = detalle
+            flash("Detalle de habitacion cargado", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error obteniendo detalle: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/reserva")
+    def admin_reserva() -> str:
+        try:
+            reserva = sistema.crear_reserva(
+                request.form.get("cliente_id", "").strip(),
+                request.form.get("habitacion_id", "").strip(),
+                request.form.get("fecha_inicio", ""),
+                request.form.get("fecha_fin", ""),
+                int(request.form.get("huespedes", "1") or 1),
+                request.form.get("metodo_pago", ""),
+            )
+            flash(f"Reserva creada: {reserva.id}", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error creando reserva: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/confirmar-pago")
+    def admin_confirmar_pago() -> str:
+        try:
+            reserva = sistema.confirmar_pago(request.form.get("reserva_id", "").strip())
+            flash(f"Pago confirmado para reserva: {reserva.id}", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error confirmando pago: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/cancelar-reserva")
+    def admin_cancelar_reserva() -> str:
+        try:
+            reserva = sistema.cancelar_reserva_y_reembolsar(request.form.get("reserva_id", "").strip())
+            flash(f"Reserva cancelada. Reembolso: {reserva.monto_reembolso}", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error cancelando reserva: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/calendario")
+    def admin_calendario() -> str:
+        try:
+            calendario = sistema.obtener_calendario_disponibilidad(
+                request.form.get("habitacion_id", "").strip(),
+                int(request.form.get("anio", "2026") or 2026),
+                int(request.form.get("mes", "1") or 1),
+            )
+            session["admin_calendario"] = calendario
+            flash("Calendario generado", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error generando calendario: {exc}", "error")
+        return redirect(url_for("admin"))
+
+    @app.post("/admin/comentario")
+    def admin_comentario() -> str:
+        try:
+            habitacion_id = request.form.get("habitacion_id", "").strip()
+            comentario = sistema.registrar_comentario(
+                request.form.get("cliente_id", "").strip(),
+                habitacion_id,
+                int(request.form.get("puntaje", "5") or 5),
+                request.form.get("comentario", ""),
+            )
+            # Refresca el panel con el detalle de la habitación comentada.
+            session["admin_detalle_habitacion"] = sistema.detalle_habitación(habitacion_id)
+            flash(f"Comentario registrado: {comentario.id}", "ok")
+        except Exception as exc:  # noqa: BLE001
+            flash(f"Error registrando comentario: {exc}", "error")
+        return redirect(url_for("admin"))
 
     return app
 
