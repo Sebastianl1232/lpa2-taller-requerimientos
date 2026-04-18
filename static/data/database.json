@@ -7,14 +7,25 @@
       "telefono": "+33 1 23 45 67 89",
       "correo_encriptado": "contact_paris_elegance",
       "ubicacion_geografica": "Paris",
-      "descripcion_servicios": ["WiFi gratis", "Desayuno buffet", "Air acondicionado", "Gym", "Spa"],
-      "fotos": ["paris.png"],
+      "descripcion_servicios": [
+        "WiFi gratis",
+        "Desayuno buffet",
+        "Air acondicionado",
+        "Gym",
+        "Spa"
+      ],
+      "fotos": [
+        "paris.png"
+      ],
       "activo": true,
       "politica_pago": "llegada",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 50,
-        "penalidad_temporada": {"alta": 30, "baja": 10},
+        "penalidad_temporada": {
+          "alta": 30,
+          "baja": 10
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -25,14 +36,25 @@
       "telefono": "+1 305 234 5678",
       "correo_encriptado": "contact_miami_beach",
       "ubicacion_geografica": "Miami",
-      "descripcion_servicios": ["Playa privada", "Piscina olímpica", "Bar 24h", "Restaurante gourmet", "Servicio de concierge"],
-      "fotos": ["miami.png"],
+      "descripcion_servicios": [
+        "Playa privada",
+        "Piscina olímpica",
+        "Bar 24h",
+        "Restaurante gourmet",
+        "Servicio de concierge"
+      ],
+      "fotos": [
+        "miami.png"
+      ],
       "activo": true,
       "politica_pago": "adelantado",
       "politica_cancelacion": {
         "tipo_reembolso": "total",
         "porcentaje_base": 100,
-        "penalidad_temporada": {"alta": 20, "baja": 5},
+        "penalidad_temporada": {
+          "alta": 20,
+          "baja": 5
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -43,14 +65,25 @@
       "telefono": "+52 998 345 6789",
       "correo_encriptado": "contact_cancun_paradise",
       "ubicacion_geografica": "Cancún",
-      "descripcion_servicios": ["Acceso a cenotes", "Spa", "Club de playa", "Todo incluido", "Entertainment nocturno"],
-      "fotos": ["cancun.png"],
+      "descripcion_servicios": [
+        "Acceso a cenotes",
+        "Spa",
+        "Club de playa",
+        "Todo incluido",
+        "Entertainment nocturno"
+      ],
+      "fotos": [
+        "cancun.png"
+      ],
       "activo": true,
       "politica_pago": "llegada",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 60,
-        "penalidad_temporada": {"alta": 40, "baja": 15},
+        "penalidad_temporada": {
+          "alta": 40,
+          "baja": 15
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -61,14 +94,25 @@
       "telefono": "+81 3 1234 5678",
       "correo_encriptado": "contact_tokio_imperial",
       "ubicacion_geografica": "Tokio",
-      "descripcion_servicios": ["Baños termales", "Kaiseki restaurant", "Jardín tradicional", "Zona de negocios", "Transporte a aeropuerto"],
-      "fotos": ["tokio.png"],
+      "descripcion_servicios": [
+        "Baños termales",
+        "Kaiseki restaurant",
+        "Jardín tradicional",
+        "Zona de negocios",
+        "Transporte a aeropuerto"
+      ],
+      "fotos": [
+        "tokio.png"
+      ],
       "activo": true,
       "politica_pago": "adelantado",
       "politica_cancelacion": {
         "tipo_reembolso": "penalidad",
         "porcentaje_base": 70,
-        "penalidad_temporada": {"alta": 35, "baja": 10},
+        "penalidad_temporada": {
+          "alta": 35,
+          "baja": 10
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -79,14 +123,25 @@
       "telefono": "+1 212 567 8901",
       "correo_encriptado": "contact_newyork_metro",
       "ubicacion_geografica": "NewYork",
-      "descripcion_servicios": ["Vistas a Central Park", "Rooftop bar", "Gym premium", "Servicio valet", "Conferencias"],
-      "fotos": ["newyork.png"],
+      "descripcion_servicios": [
+        "Vistas a Central Park",
+        "Rooftop bar",
+        "Gym premium",
+        "Servicio valet",
+        "Conferencias"
+      ],
+      "fotos": [
+        "newyork.png"
+      ],
       "activo": true,
       "politica_pago": "llegada",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 55,
-        "penalidad_temporada": {"alta": 25, "baja": 8},
+        "penalidad_temporada": {
+          "alta": 25,
+          "baja": 8
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -97,14 +152,25 @@
       "telefono": "+39 06 234 5678",
       "correo_encriptado": "contact_roma_classics",
       "ubicacion_geografica": "Rome",
-      "descripcion_servicios": ["Tours culturales", "Vinos italianos", "Piscina en terraza", "Biblioteca", "Cine privado"],
-      "fotos": ["rome.png"],
+      "descripcion_servicios": [
+        "Tours culturales",
+        "Vinos italianos",
+        "Piscina en terraza",
+        "Biblioteca",
+        "Cine privado"
+      ],
+      "fotos": [
+        "rome.png"
+      ],
       "activo": true,
       "politica_pago": "llegada",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 50,
-        "penalidad_temporada": {"alta": 30, "baja": 10},
+        "penalidad_temporada": {
+          "alta": 30,
+          "baja": 10
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -115,14 +181,25 @@
       "telefono": "+297 521 3456",
       "correo_encriptado": "contact_aruba_paradise",
       "ubicacion_geografica": "Aruba",
-      "descripcion_servicios": ["Playa infinita", "Windsurf", "Snorkel", "Resort todo incluido", "Animación"],
-      "fotos": ["aruba.png"],
+      "descripcion_servicios": [
+        "Playa infinita",
+        "Windsurf",
+        "Snorkel",
+        "Resort todo incluido",
+        "Animación"
+      ],
+      "fotos": [
+        "aruba.png"
+      ],
       "activo": true,
       "politica_pago": "adelantado",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 60,
-        "penalidad_temporada": {"alta": 35, "baja": 12},
+        "penalidad_temporada": {
+          "alta": 35,
+          "baja": 12
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -133,14 +210,25 @@
       "telefono": "+1 242 363 3000",
       "correo_encriptado": "contact_bahamas_atlantis",
       "ubicacion_geografica": "Bahamas",
-      "descripcion_servicios": ["Acuario gigante", "Parque acuático", "Playas privadas", "Marina de lujo", "Casino"],
-      "fotos": ["bahamas.png"],
+      "descripcion_servicios": [
+        "Acuario gigante",
+        "Parque acuático",
+        "Playas privadas",
+        "Marina de lujo",
+        "Casino"
+      ],
+      "fotos": [
+        "bahamas.png"
+      ],
       "activo": true,
       "politica_pago": "llegada",
       "politica_cancelacion": {
         "tipo_reembolso": "total",
         "porcentaje_base": 100,
-        "penalidad_temporada": {"alta": 20, "baja": 5},
+        "penalidad_temporada": {
+          "alta": 20,
+          "baja": 5
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -151,14 +239,25 @@
       "telefono": "+1 876 953 2650",
       "correo_encriptado": "contact_jamaica_reggae",
       "ubicacion_geografica": "Jamaica",
-      "descripcion_servicios": ["Playas de arena blanca", "Buceo", "Tour rastafari", "Música en vivo", "Deporte acuático"],
-      "fotos": ["jamaica.png"],
+      "descripcion_servicios": [
+        "Playas de arena blanca",
+        "Buceo",
+        "Tour rastafari",
+        "Música en vivo",
+        "Deporte acuático"
+      ],
+      "fotos": [
+        "jamaica.png"
+      ],
       "activo": true,
       "politica_pago": "llegada",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 55,
-        "penalidad_temporada": {"alta": 30, "baja": 10},
+        "penalidad_temporada": {
+          "alta": 30,
+          "baja": 10
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -169,14 +268,25 @@
       "telefono": "+34 91 522 2200",
       "correo_encriptado": "contact_madrid_royal",
       "ubicacion_geografica": "Madrid",
-      "descripcion_servicios": ["Centro de la ciudad", "Tours de museo", "Gastronomía española", "Tiendas de lujo", "Zona de negocios"],
-      "fotos": ["madrid.png"],
+      "descripcion_servicios": [
+        "Centro de la ciudad",
+        "Tours de museo",
+        "Gastronomía española",
+        "Tiendas de lujo",
+        "Zona de negocios"
+      ],
+      "fotos": [
+        "madrid.png"
+      ],
       "activo": true,
       "politica_pago": "adelantado",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 50,
-        "penalidad_temporada": {"alta": 25, "baja": 8},
+        "penalidad_temporada": {
+          "alta": 25,
+          "baja": 8
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -187,14 +297,25 @@
       "telefono": "+7 495 629 0688",
       "correo_encriptado": "contact_moscu_redsquare",
       "ubicacion_geografica": "Moscú",
-      "descripcion_servicios": ["Vista a Plaza Roja", "Baños rusos", "Opera clásica", "Cultura rusa", "Fuegos artificiales"],
-      "fotos": ["moscu.png"],
+      "descripcion_servicios": [
+        "Vista a Plaza Roja",
+        "Baños rusos",
+        "Opera clásica",
+        "Cultura rusa",
+        "Fuegos artificiales"
+      ],
+      "fotos": [
+        "moscu.png"
+      ],
       "activo": true,
       "politica_pago": "adelantado",
       "politica_cancelacion": {
         "tipo_reembolso": "penalidad",
         "porcentaje_base": 65,
-        "penalidad_temporada": {"alta": 40, "baja": 15},
+        "penalidad_temporada": {
+          "alta": 40,
+          "baja": 15
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -205,14 +326,25 @@
       "telefono": "+507 206 5000",
       "correo_encriptado": "contact_panama_canal",
       "ubicacion_geografica": "Panamá",
-      "descripcion_servicios": ["Vistas del Canal de Panamá", "Crucero nocturno", "Tours históricos", "Centro de negocios", "Compras duty-free"],
-      "fotos": ["panama.png"],
+      "descripcion_servicios": [
+        "Vistas del Canal de Panamá",
+        "Crucero nocturno",
+        "Tours históricos",
+        "Centro de negocios",
+        "Compras duty-free"
+      ],
+      "fotos": [
+        "panama.png"
+      ],
       "activo": true,
       "politica_pago": "llegada",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 55,
-        "penalidad_temporada": {"alta": 28, "baja": 9},
+        "penalidad_temporada": {
+          "alta": 28,
+          "baja": 9
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -223,14 +355,25 @@
       "telefono": "+82 2 6959 8888",
       "correo_encriptado": "contact_seul_kwave",
       "ubicacion_geografica": "Seul",
-      "descripcion_servicios": ["Karaoke VIP", "K-pop tours", "Tecnología 5G", "Restaurantes Michelin", "Spa coreano"],
-      "fotos": ["seul.png"],
+      "descripcion_servicios": [
+        "Karaoke VIP",
+        "K-pop tours",
+        "Tecnología 5G",
+        "Restaurantes Michelin",
+        "Spa coreano"
+      ],
+      "fotos": [
+        "seul.png"
+      ],
       "activo": true,
       "politica_pago": "adelantado",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 60,
-        "penalidad_temporada": {"alta": 32, "baja": 11},
+        "penalidad_temporada": {
+          "alta": 32,
+          "baja": 11
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -241,14 +384,25 @@
       "telefono": "+61 2 8214 0000",
       "correo_encriptado": "contact_sidney_harbour",
       "ubicacion_geografica": "Sidney",
-      "descripcion_servicios": ["Vistas a la Ópera", "Playas cercanas", "Aventura en la naturaleza", "Tours aborígenes", "Deportes acuáticos"],
-      "fotos": ["sidney.png"],
+      "descripcion_servicios": [
+        "Vistas a la Ópera",
+        "Playas cercanas",
+        "Aventura en la naturaleza",
+        "Tours aborígenes",
+        "Deportes acuáticos"
+      ],
+      "fotos": [
+        "sidney.png"
+      ],
       "activo": true,
       "politica_pago": "llegada",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 50,
-        "penalidad_temporada": {"alta": 30, "baja": 10},
+        "penalidad_temporada": {
+          "alta": 30,
+          "baja": 10
+        },
         "penalidad_tipo_habitación": {}
       }
     },
@@ -259,14 +413,25 @@
       "telefono": "+886 2 8101 8047",
       "correo_encriptado": "contact_taipei_skyline",
       "ubicacion_geografica": "Taipei",
-      "descripcion_servicios": ["Acceso a rascacielos", "Observatorio", "Comida taiwanese", "Mercados nocturnos", "Templos"],
-      "fotos": ["taipei.png"],
+      "descripcion_servicios": [
+        "Acceso a rascacielos",
+        "Observatorio",
+        "Comida taiwanese",
+        "Mercados nocturnos",
+        "Templos"
+      ],
+      "fotos": [
+        "taipei.png"
+      ],
       "activo": true,
       "politica_pago": "adelantado",
       "politica_cancelacion": {
         "tipo_reembolso": "parcial",
         "porcentaje_base": 58,
-        "penalidad_temporada": {"alta": 33, "baja": 11},
+        "penalidad_temporada": {
+          "alta": 33,
+          "baja": 11
+        },
         "penalidad_tipo_habitación": {}
       }
     }
@@ -279,7 +444,11 @@
       "descripcion": "Disfruta del verano parisino con descuento especial",
       "temporada": "alta",
       "porcentaje_descuento": 15.0,
-      "servicios_adicionales": ["Tour guiado", "Cena romántica", "Acceso spa"],
+      "servicios_adicionales": [
+        "Tour guiado",
+        "Cena romántica",
+        "Acceso spa"
+      ],
       "fecha_inicio": "2026-06-01",
       "fecha_fin": "2026-08-31",
       "activa": true
@@ -291,7 +460,11 @@
       "descripcion": "Promoción de invierno con servicios adicionales",
       "temporada": "baja",
       "porcentaje_descuento": 30.0,
-      "servicios_adicionales": ["Desayuno gourmet", "Calefacción premium", "Vino tinto"],
+      "servicios_adicionales": [
+        "Desayuno gourmet",
+        "Calefacción premium",
+        "Vino tinto"
+      ],
       "fecha_inicio": "2026-12-01",
       "fecha_fin": "2027-02-28",
       "activa": true
@@ -303,7 +476,11 @@
       "descripcion": "Disfruta de la playa con paquete especial",
       "temporada": "alta",
       "porcentaje_descuento": 20.0,
-      "servicios_adicionales": ["Clase de surf", "Cóctel gratis", "Toallas premium"],
+      "servicios_adicionales": [
+        "Clase de surf",
+        "Cóctel gratis",
+        "Toallas premium"
+      ],
       "fecha_inicio": "2026-06-01",
       "fecha_fin": "2026-08-31",
       "activa": true
@@ -315,7 +492,11 @@
       "descripcion": "Escápate del frío en Miami",
       "temporada": "baja",
       "porcentaje_descuento": 35.0,
-      "servicios_adicionales": ["Suite upgrade", "Desayuno buffet", "Transporte"],
+      "servicios_adicionales": [
+        "Suite upgrade",
+        "Desayuno buffet",
+        "Transporte"
+      ],
       "fecha_inicio": "2027-01-01",
       "fecha_fin": "2027-03-31",
       "activa": true
@@ -327,7 +508,11 @@
       "descripcion": "Todo incluido con descuento especial",
       "temporada": "alta",
       "porcentaje_descuento": 25.0,
-      "servicios_adicionales": ["Excursión cenote", "Spa", "Cena gourmet"],
+      "servicios_adicionales": [
+        "Excursión cenote",
+        "Spa",
+        "Cena gourmet"
+      ],
       "fecha_inicio": "2026-06-01",
       "fecha_fin": "2026-09-30",
       "activa": true
@@ -339,7 +524,11 @@
       "descripcion": "Invierno tropical sin preocupaciones",
       "temporada": "baja",
       "porcentaje_descuento": 40.0,
-      "servicios_adicionales": ["Club de playa", "Comida mexicana", "Entretenimiento"],
+      "servicios_adicionales": [
+        "Club de playa",
+        "Comida mexicana",
+        "Entretenimiento"
+      ],
       "fecha_inicio": "2026-10-01",
       "fecha_fin": "2026-11-30",
       "activa": true
@@ -352,9 +541,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación confortable con vista a la ciudad",
       "precio_base": 120.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Secador"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Secador"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["room1.jpg"],
+      "fotos": [
+        "room1.jpg"
+      ],
       "activo": true
     },
     {
@@ -363,9 +559,17 @@
       "tipo": "Suite",
       "descripcion": "Suite elegante con sala de estar",
       "precio_base": 200.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Minibar", "Sala de estar"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Minibar",
+        "Sala de estar"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite1.jpg"],
+      "fotos": [
+        "suite1.jpg"
+      ],
       "activo": true
     },
     {
@@ -374,9 +578,18 @@
       "tipo": "Deluxe",
       "descripcion": "Suite de lujo con jacuzzi privado",
       "precio_base": 350.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Terraza", "Servicio room service"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Jacuzzi",
+        "Terraza",
+        "Servicio room service"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["deluxe1.jpg"],
+      "fotos": [
+        "deluxe1.jpg"
+      ],
       "activo": true
     },
     {
@@ -385,9 +598,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con vista parcial al océano",
       "precio_base": 150.0,
-      "servicios_incluidos": ["WiFi", "Aire acondicionado", "TV", "Baño privado"],
+      "servicios_incluidos": [
+        "WiFi",
+        "Aire acondicionado",
+        "TV",
+        "Baño privado"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["beach1.jpg"],
+      "fotos": [
+        "beach1.jpg"
+      ],
       "activo": true
     },
     {
@@ -396,9 +616,18 @@
       "tipo": "Suite",
       "descripcion": "Suite frente al mar con balcón",
       "precio_base": 280.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Balcón", "Mini-frigorífico"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Jacuzzi",
+        "Balcón",
+        "Mini-frigorífico"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite2.jpg"],
+      "fotos": [
+        "suite2.jpg"
+      ],
       "activo": true
     },
     {
@@ -407,9 +636,18 @@
       "tipo": "Deluxe",
       "descripcion": "Penthouse con vista 180 grados",
       "precio_base": 450.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Terraza con pool", "Servicio concierge"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Jacuzzi",
+        "Terraza con pool",
+        "Servicio concierge"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["penthouse.jpg"],
+      "fotos": [
+        "penthouse.jpg"
+      ],
       "activo": true
     },
     {
@@ -418,9 +656,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con acceso a cenotes",
       "precio_base": 130.0,
-      "servicios_incluidos": ["WiFi", "Aire acondicionado", "TV", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "Aire acondicionado",
+        "TV",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["cenote1.jpg"],
+      "fotos": [
+        "cenote1.jpg"
+      ],
       "activo": true
     },
     {
@@ -429,9 +674,17 @@
       "tipo": "Suite",
       "descripcion": "Suite todo incluido con piscina privada",
       "precio_base": 250.0,
-      "servicios_incluidos": ["Todo incluido", "WiFi premium", "Piscina privada", "Aire acondicionado", "Espectáculos"],
+      "servicios_incluidos": [
+        "Todo incluido",
+        "WiFi premium",
+        "Piscina privada",
+        "Aire acondicionado",
+        "Espectáculos"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite3.jpg"],
+      "fotos": [
+        "suite3.jpg"
+      ],
       "activo": true
     },
     {
@@ -440,9 +693,17 @@
       "tipo": "Deluxe",
       "descripcion": "Villa de lujo con jardín tropical",
       "precio_base": 400.0,
-      "servicios_incluidos": ["Todo incluido premium", "Villa privada", "Jardinero", "Chef privado", "Aire acondicionado"],
+      "servicios_incluidos": [
+        "Todo incluido premium",
+        "Villa privada",
+        "Jardinero",
+        "Chef privado",
+        "Aire acondicionado"
+      ],
       "capacidad_maxima": 6,
-      "fotos": ["villa.jpg"],
+      "fotos": [
+        "villa.jpg"
+      ],
       "activo": true
     },
     {
@@ -451,9 +712,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación tradicional japonesa",
       "precio_base": 180.0,
-      "servicios_incluidos": ["WiFi", "Futon", "TV", "Baño privado"],
+      "servicios_incluidos": [
+        "WiFi",
+        "Futon",
+        "TV",
+        "Baño privado"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["japanese1.jpg"],
+      "fotos": [
+        "japanese1.jpg"
+      ],
       "activo": true
     },
     {
@@ -462,9 +730,17 @@
       "tipo": "Suite",
       "descripcion": "Suite con baños termales",
       "precio_base": 300.0,
-      "servicios_incluidos": ["WiFi premium", "Baños termales", "TV smart", "Minibar", "Terraza"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Baños termales",
+        "TV smart",
+        "Minibar",
+        "Terraza"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite4.jpg"],
+      "fotos": [
+        "suite4.jpg"
+      ],
       "activo": true
     },
     {
@@ -473,9 +749,17 @@
       "tipo": "Deluxe",
       "descripcion": "Suite de lujo con vista a templos",
       "precio_base": 500.0,
-      "servicios_incluidos": ["WiFi premium", "Baños termales privados", "Ceremonia de té", "TV smart", "Terraza panorámica"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Baños termales privados",
+        "Ceremonia de té",
+        "TV smart",
+        "Terraza panorámica"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["deluxe4.jpg"],
+      "fotos": [
+        "deluxe4.jpg"
+      ],
       "activo": true
     },
     {
@@ -484,9 +768,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con vista a Central Park",
       "precio_base": 200.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Teléfono"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Teléfono"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["ny1.jpg"],
+      "fotos": [
+        "ny1.jpg"
+      ],
       "activo": true
     },
     {
@@ -495,9 +786,17 @@
       "tipo": "Suite",
       "descripcion": "Suite ejecutiva con sala de reuniones",
       "precio_base": 350.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Sala de reuniones", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Sala de reuniones",
+        "Minibar"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite5.jpg"],
+      "fotos": [
+        "suite5.jpg"
+      ],
       "activo": true
     },
     {
@@ -506,9 +805,18 @@
       "tipo": "Deluxe",
       "descripcion": "Penthouse con vista a Times Square",
       "precio_base": 600.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Terraza", "Servicio concierge 24h"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Jacuzzi",
+        "Terraza",
+        "Servicio concierge 24h"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["penthouse5.jpg"],
+      "fotos": [
+        "penthouse5.jpg"
+      ],
       "activo": true
     },
     {
@@ -517,9 +825,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con vista al Foro Romano",
       "precio_base": 140.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["rome1.jpg"],
+      "fotos": [
+        "rome1.jpg"
+      ],
       "activo": true
     },
     {
@@ -528,9 +843,17 @@
       "tipo": "Suite",
       "descripcion": "Suite con acceso a biblioteca privada",
       "precio_base": 260.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Biblioteca", "Aire acondicionado", "Vino italiano"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Biblioteca",
+        "Aire acondicionado",
+        "Vino italiano"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite6.jpg"],
+      "fotos": [
+        "suite6.jpg"
+      ],
       "activo": true
     },
     {
@@ -539,9 +862,18 @@
       "tipo": "Deluxe",
       "descripcion": "Suite de lujo con cine privado",
       "precio_base": 420.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Cine privado", "Terraza", "Chef privado"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Cine privado",
+        "Terraza",
+        "Chef privado"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["deluxe6.jpg"],
+      "fotos": [
+        "deluxe6.jpg"
+      ],
       "activo": true
     },
     {
@@ -550,9 +882,16 @@
       "tipo": "Estándar",
       "descripcion": "Bungalow con playa privada",
       "precio_base": 110.0,
-      "servicios_incluidos": ["WiFi", "Aire acondicionado", "Ventilador", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "Aire acondicionado",
+        "Ventilador",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["aruba1.jpg"],
+      "fotos": [
+        "aruba1.jpg"
+      ],
       "activo": true
     },
     {
@@ -561,9 +900,17 @@
       "tipo": "Suite",
       "descripcion": "Suite de resort con piscina",
       "precio_base": 220.0,
-      "servicios_incluidos": ["WiFi premium", "Piscina", "Aire acondicionado", "Minibar", "Solárium"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Piscina",
+        "Aire acondicionado",
+        "Minibar",
+        "Solárium"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite7.jpg"],
+      "fotos": [
+        "suite7.jpg"
+      ],
       "activo": true
     },
     {
@@ -572,9 +919,17 @@
       "tipo": "Deluxe",
       "descripcion": "Villa frente a la playa con jacuzzi",
       "precio_base": 380.0,
-      "servicios_incluidos": ["WiFi premium", "Jacuzzi", "Aire acondicionado", "Terraza", "Servicio room service"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Jacuzzi",
+        "Aire acondicionado",
+        "Terraza",
+        "Servicio room service"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["villa7.jpg"],
+      "fotos": [
+        "villa7.jpg"
+      ],
       "activo": true
     },
     {
@@ -583,9 +938,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación vista a la laguna",
       "precio_base": 160.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Acceso playa"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Acceso playa"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["bahamas1.jpg"],
+      "fotos": [
+        "bahamas1.jpg"
+      ],
       "activo": true
     },
     {
@@ -594,432 +956,17 @@
       "tipo": "Suite",
       "descripcion": "Suite oceanfront con balcón",
       "precio_base": 300.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Balcón", "Casas casino"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Balcón",
+        "Casas casino"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite8.jpg"],
-      "activo": true
-    },
-    {
-      "id": "promo-015",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440009",
-      "nombre": "Jamaica Reggae Summer",
-      "descripcion": "Verano caribeño con ritmo y descuento",
-      "temporada": "alta",
-      "porcentaje_descuento": 18.0,
-      "servicios_adicionales": ["Tour rastafari", "Concierto reggae", "Lesson de reggae"],
-      "fecha_inicio": "2026-06-01",
-      "fecha_fin": "2026-08-31",
-      "activa": true
-    },
-    {
-      "id": "promo-016",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440009",
-      "nombre": "Jamaica Invierno",
-      "descripcion": "Escape caribeño en temporada baja",
-      "temporada": "baja",
-      "porcentaje_descuento": 32.0,
-      "servicios_adicionales": ["Buceo", "Tour de playas privadas", "Comida criolla"],
-      "fecha_inicio": "2026-10-01",
-      "fecha_fin": "2026-11-30",
-      "activa": true
-    },
-    {
-      "id": "promo-017",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440010",
-      "nombre": "Madrid Verano",
-      "descripcion": "Verano madrileño con experiencia cultura",
-      "temporada": "alta",
-      "porcentaje_descuento": 16.0,
-      "servicios_adicionales": ["Tour de museos", "Cena española", "Flamenco"],
-      "fecha_inicio": "2026-06-01",
-      "fecha_fin": "2026-08-31",
-      "activa": true
-    },
-    {
-      "id": "promo-018",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440010",
-      "nombre": "Madrid Invierno",
-      "descripcion": "Culturas y compras en invierno",
-      "temporada": "baja",
-      "porcentaje_descuento": 28.0,
-      "servicios_adicionales": ["Tour histórico", "Compras en Gran Vía", "Tapas gourmet"],
-      "fecha_inicio": "2026-12-01",
-      "fecha_fin": "2027-02-28",
-      "activa": true
-    },
-    {
-      "id": "promo-019",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440011",
-      "nombre": "Moscú Verano",
-      "descripcion": "Noches blancas de Moscú",
-      "temporada": "alta",
-      "porcentaje_descuento": 12.0,
-      "servicios_adicionales": ["Bolshoi ballet", "Tour histórico", "Vodka tasting"],
-      "fecha_inicio": "2026-06-01",
-      "fecha_fin": "2026-08-31",
-      "activa": true
-    },
-    {
-      "id": "promo-020",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440011",
-      "nombre": "Moscú Invierno",
-      "descripcion": "Invierno mágico ruso",
-      "temporada": "baja",
-      "porcentaje_descuento": 25.0,
-      "servicios_adicionales": ["Patinaje", "Baños rusos", "Mercados navideños"],
-      "fecha_inicio": "2026-12-01",
-      "fecha_fin": "2027-02-28",
-      "activa": true
-    },
-    {
-      "id": "promo-021",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440012",
-      "nombre": "Panamá Verano",
-      "descripcion": "Verano del canal con descuento",
-      "temporada": "alta",
-      "porcentaje_descuento": 14.0,
-      "servicios_adicionales": ["Crucero por canal", "Tours históricos", "Camarones"],
-      "fecha_inicio": "2026-06-01",
-      "fecha_fin": "2026-08-31",
-      "activa": true
-    },
-    {
-      "id": "promo-022",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440012",
-      "nombre": "Panamá Invierno",
-      "descripcion": "Invierno tropical sin lluvia",
-      "temporada": "baja",
-      "porcentaje_descuento": 36.0,
-      "servicios_adicionales": ["Compras duty-free", "Tour arqueológico", "Comida panameña"],
-      "fecha_inicio": "2026-12-01",
-      "fecha_fin": "2027-02-28",
-      "activa": true
-    },
-    {
-      "id": "promo-023",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440013",
-      "nombre": "Seul K-pop Summer",
-      "descripcion": "Verano K-pop con conciertos",
-      "temporada": "alta",
-      "porcentaje_descuento": 17.0,
-      "servicios_adicionales": ["K-pop concert", "Fan meeting", "Shopping K-drama"],
-      "fecha_inicio": "2026-06-01",
-      "fecha_fin": "2026-08-31",
-      "activa": true
-    },
-    {
-      "id": "promo-024",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440013",
-      "nombre": "Seul Invierno",
-      "descripcion": "Invierno en Seul con nieve",
-      "temporada": "baja",
-      "porcentaje_descuento": 30.0,
-      "servicios_adicionales": ["Esquí", "Spa coreano", "Mercados callejeros"],
-      "fecha_inicio": "2026-12-01",
-      "fecha_fin": "2027-02-28",
-      "activa": true
-    },
-    {
-      "id": "promo-025",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440014",
-      "nombre": "Sidney Verano",
-      "descripcion": "Verano australiano con playas",
-      "temporada": "alta",
-      "porcentaje_descuento": 13.0,
-      "servicios_adicionales": ["Surfing lessons", "Opera show", "Scenic walk"],
-      "fecha_inicio": "2026-12-01",
-      "fecha_fin": "2027-02-28",
-      "activa": true
-    },
-    {
-      "id": "promo-026",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440014",
-      "nombre": "Sidney Invierno",
-      "descripcion": "Invierno suave en Australia",
-      "temporada": "baja",
-      "porcentaje_descuento": 34.0,
-      "servicios_adicionales": ["Wildlife tour", "Aboriginal experience", "Wine tasting"],
-      "fecha_inicio": "2026-06-01",
-      "fecha_fin": "2026-08-31",
-      "activa": true
-    },
-    {
-      "id": "promo-027",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440015",
-      "nombre": "Taipei Verano",
-      "descripcion": "Verano en Taipei con mercados",
-      "temporada": "alta",
-      "porcentaje_descuento": 19.0,
-      "servicios_adicionales": ["Night market tour", "Temple experience", "Taiwan food"],
-      "fecha_inicio": "2026-06-01",
-      "fecha_fin": "2026-08-31",
-      "activa": true
-    },
-    {
-      "id": "promo-028",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440015",
-      "nombre": "Taipei Invierno",
-      "descripcion": "Invierno templado en Taipei",
-      "temporada": "baja",
-      "porcentaje_descuento": 31.0,
-      "servicios_adicionales": ["Hot spring", "Mountain hiking", "Festival lights"],
-      "fecha_inicio": "2026-12-01",
-      "fecha_fin": "2027-02-28",
-      "activa": true
-    }
-  ],
-  "habitaciones": [
-    {
-      "id": "hab-hotel1-001",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440001",
-      "tipo": "Estándar",
-      "descripcion": "Habitación confortable con vista a la ciudad",
-      "precio_base": 120.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Secador"],
-      "capacidad_maxima": 2,
-      "fotos": ["room1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel1-002",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440001",
-      "tipo": "Suite",
-      "descripcion": "Suite elegante con sala de estar",
-      "precio_base": 200.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Minibar", "Sala de estar"],
-      "capacidad_maxima": 4,
-      "fotos": ["suite1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel1-003",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440001",
-      "tipo": "Deluxe",
-      "descripcion": "Suite de lujo con jacuzzi privado",
-      "precio_base": 350.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Terraza", "Servicio room service"],
-      "capacidad_maxima": 2,
-      "fotos": ["deluxe1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel2-001",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440002",
-      "tipo": "Estándar",
-      "descripcion": "Habitación con vista parcial al océano",
-      "precio_base": 150.0,
-      "servicios_incluidos": ["WiFi", "Aire acondicionado", "TV", "Baño privado"],
-      "capacidad_maxima": 2,
-      "fotos": ["beach1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel2-002",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440002",
-      "tipo": "Suite",
-      "descripcion": "Suite frente al mar con balcón",
-      "precio_base": 280.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Balcón", "Mini-frigorífico"],
-      "capacidad_maxima": 4,
-      "fotos": ["suite2.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel2-003",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440002",
-      "tipo": "Deluxe",
-      "descripcion": "Penthouse con vista 180 grados",
-      "precio_base": 450.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Terraza con pool", "Servicio concierge"],
-      "capacidad_maxima": 2,
-      "fotos": ["penthouse.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel3-001",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440003",
-      "tipo": "Estándar",
-      "descripcion": "Habitación con acceso a cenotes",
-      "precio_base": 130.0,
-      "servicios_incluidos": ["WiFi", "Aire acondicionado", "TV", "Minibar"],
-      "capacidad_maxima": 2,
-      "fotos": ["cenote1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel3-002",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440003",
-      "tipo": "Suite",
-      "descripcion": "Suite todo incluido con piscina privada",
-      "precio_base": 250.0,
-      "servicios_incluidos": ["Todo incluido", "WiFi premium", "Piscina privada", "Aire acondicionado", "Espectáculos"],
-      "capacidad_maxima": 4,
-      "fotos": ["suite3.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel3-003",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440003",
-      "tipo": "Deluxe",
-      "descripcion": "Villa de lujo con jardín tropical",
-      "precio_base": 400.0,
-      "servicios_incluidos": ["Todo incluido premium", "Villa privada", "Jardinero", "Chef privado", "Aire acondicionado"],
-      "capacidad_maxima": 6,
-      "fotos": ["villa.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel4-001",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440004",
-      "tipo": "Estándar",
-      "descripcion": "Habitación tradicional japonesa",
-      "precio_base": 180.0,
-      "servicios_incluidos": ["WiFi", "Futon", "TV", "Baño privado"],
-      "capacidad_maxima": 2,
-      "fotos": ["japanese1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel4-002",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440004",
-      "tipo": "Suite",
-      "descripcion": "Suite con baños termales",
-      "precio_base": 300.0,
-      "servicios_incluidos": ["WiFi premium", "Baños termales", "TV smart", "Minibar", "Terraza"],
-      "capacidad_maxima": 4,
-      "fotos": ["suite4.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel4-003",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440004",
-      "tipo": "Deluxe",
-      "descripcion": "Suite de lujo con vista a templos",
-      "precio_base": 500.0,
-      "servicios_incluidos": ["WiFi premium", "Baños termales privados", "Ceremonia de té", "TV smart", "Terraza panorámica"],
-      "capacidad_maxima": 2,
-      "fotos": ["deluxe4.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel5-001",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440005",
-      "tipo": "Estándar",
-      "descripcion": "Habitación con vista a Central Park",
-      "precio_base": 200.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Teléfono"],
-      "capacidad_maxima": 2,
-      "fotos": ["ny1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel5-002",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440005",
-      "tipo": "Suite",
-      "descripcion": "Suite ejecutiva con sala de reuniones",
-      "precio_base": 350.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Sala de reuniones", "Minibar"],
-      "capacidad_maxima": 4,
-      "fotos": ["suite5.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel5-003",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440005",
-      "tipo": "Deluxe",
-      "descripcion": "Penthouse con vista a Times Square",
-      "precio_base": 600.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Terraza", "Servicio concierge 24h"],
-      "capacidad_maxima": 2,
-      "fotos": ["penthouse5.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel6-001",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440006",
-      "tipo": "Estándar",
-      "descripcion": "Habitación con vista al Foro Romano",
-      "precio_base": 140.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Minibar"],
-      "capacidad_maxima": 2,
-      "fotos": ["rome1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel6-002",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440006",
-      "tipo": "Suite",
-      "descripcion": "Suite con acceso a biblioteca privada",
-      "precio_base": 260.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Biblioteca", "Aire acondicionado", "Vino italiano"],
-      "capacidad_maxima": 4,
-      "fotos": ["suite6.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel6-003",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440006",
-      "tipo": "Deluxe",
-      "descripcion": "Suite de lujo con cine privado",
-      "precio_base": 420.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Cine privado", "Terraza", "Chef privado"],
-      "capacidad_maxima": 2,
-      "fotos": ["deluxe6.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel7-001",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440007",
-      "tipo": "Estándar",
-      "descripcion": "Bungalow con playa privada",
-      "precio_base": 110.0,
-      "servicios_incluidos": ["WiFi", "Aire acondicionado", "Ventilador", "Minibar"],
-      "capacidad_maxima": 2,
-      "fotos": ["aruba1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel7-002",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440007",
-      "tipo": "Suite",
-      "descripcion": "Suite de resort con piscina",
-      "precio_base": 220.0,
-      "servicios_incluidos": ["WiFi premium", "Piscina", "Aire acondicionado", "Minibar", "Solárium"],
-      "capacidad_maxima": 4,
-      "fotos": ["suite7.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel7-003",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440007",
-      "tipo": "Deluxe",
-      "descripcion": "Villa frente a la playa con jacuzzi",
-      "precio_base": 380.0,
-      "servicios_incluidos": ["WiFi premium", "Jacuzzi", "Aire acondicionado", "Terraza", "Servicio room service"],
-      "capacidad_maxima": 2,
-      "fotos": ["villa7.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel8-001",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440008",
-      "tipo": "Estándar",
-      "descripcion": "Habitación vista a la laguna",
-      "precio_base": 160.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Acceso playa"],
-      "capacidad_maxima": 2,
-      "fotos": ["bahamas1.jpg"],
-      "activo": true
-    },
-    {
-      "id": "hab-hotel8-002",
-      "hotel_id": "550e8400-e29b-41d4-a716-446655440008",
-      "tipo": "Suite",
-      "descripcion": "Suite oceanfront con balcón",
-      "precio_base": 300.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Balcón", "Casas casino"],
-      "capacidad_maxima": 4,
-      "fotos": ["suite8.jpg"],
+      "fotos": [
+        "suite8.jpg"
+      ],
       "activo": true
     },
     {
@@ -1028,9 +975,17 @@
       "tipo": "Deluxe",
       "descripcion": "Villa privada con piscina infinita",
       "precio_base": 550.0,
-      "servicios_incluidos": ["WiFi premium", "Piscina privada", "Aire acondicionado", "Cancha de tenis", "Royal treatment"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Piscina privada",
+        "Aire acondicionado",
+        "Cancha de tenis",
+        "Royal treatment"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["villa8.jpg"],
+      "fotos": [
+        "villa8.jpg"
+      ],
       "activo": true
     },
     {
@@ -1039,9 +994,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con vista a la playa",
       "precio_base": 95.0,
-      "servicios_incluidos": ["WiFi", "Ventilador", "Aire acondicionado", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "Ventilador",
+        "Aire acondicionado",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["jamaica1.jpg"],
+      "fotos": [
+        "jamaica1.jpg"
+      ],
       "activo": true
     },
     {
@@ -1050,9 +1012,17 @@
       "tipo": "Suite",
       "descripcion": "Suite tropical con piscina",
       "precio_base": 210.0,
-      "servicios_incluidos": ["WiFi premium", "Piscina privada", "Aire acondicionado", "Minibar", "Música"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Piscina privada",
+        "Aire acondicionado",
+        "Minibar",
+        "Música"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite9.jpg"],
+      "fotos": [
+        "suite9.jpg"
+      ],
       "activo": true
     },
     {
@@ -1061,9 +1031,17 @@
       "tipo": "Deluxe",
       "descripcion": "Villa caribeña de lujo",
       "precio_base": 360.0,
-      "servicios_incluidos": ["WiFi premium", "Villa privada", "Aire acondicionado", "Terraza", "Servicio concierge"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Villa privada",
+        "Aire acondicionado",
+        "Terraza",
+        "Servicio concierge"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["villa9.jpg"],
+      "fotos": [
+        "villa9.jpg"
+      ],
       "activo": true
     },
     {
@@ -1072,9 +1050,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación céntrica en Gran Vía",
       "precio_base": 125.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["madrid1.jpg"],
+      "fotos": [
+        "madrid1.jpg"
+      ],
       "activo": true
     },
     {
@@ -1083,9 +1068,17 @@
       "tipo": "Suite",
       "descripcion": "Suite monumental con vistas",
       "precio_base": 240.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Minibar", "Balcón"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Minibar",
+        "Balcón"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite10.jpg"],
+      "fotos": [
+        "suite10.jpg"
+      ],
       "activo": true
     },
     {
@@ -1094,9 +1087,17 @@
       "tipo": "Deluxe",
       "descripcion": "Suite de lujo con jardín privado",
       "precio_base": 390.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jardín", "Servicio concierge"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Jardín",
+        "Servicio concierge"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["deluxe10.jpg"],
+      "fotos": [
+        "deluxe10.jpg"
+      ],
       "activo": true
     },
     {
@@ -1105,9 +1106,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con vista a Plaza Roja",
       "precio_base": 170.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["moscu1.jpg"],
+      "fotos": [
+        "moscu1.jpg"
+      ],
       "activo": true
     },
     {
@@ -1116,9 +1124,17 @@
       "tipo": "Suite",
       "descripcion": "Suite rusa con baños termales",
       "precio_base": 310.0,
-      "servicios_incluidos": ["WiFi premium", "Baños termales", "TV smart", "Aire acondicionado", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Baños termales",
+        "TV smart",
+        "Aire acondicionado",
+        "Minibar"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite11.jpg"],
+      "fotos": [
+        "suite11.jpg"
+      ],
       "activo": true
     },
     {
@@ -1127,9 +1143,17 @@
       "tipo": "Deluxe",
       "descripcion": "Suite imperial con terraza",
       "precio_base": 480.0,
-      "servicios_incluidos": ["WiFi premium", "Baños termales privados", "TV smart", "Aire acondicionado", "Terraza panorámica"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "Baños termales privados",
+        "TV smart",
+        "Aire acondicionado",
+        "Terraza panorámica"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["deluxe11.jpg"],
+      "fotos": [
+        "deluxe11.jpg"
+      ],
       "activo": true
     },
     {
@@ -1138,9 +1162,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con vista al canal",
       "precio_base": 115.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["panama1.jpg"],
+      "fotos": [
+        "panama1.jpg"
+      ],
       "activo": true
     },
     {
@@ -1149,9 +1180,17 @@
       "tipo": "Suite",
       "descripcion": "Suite del canal con balcón",
       "precio_base": 235.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Balcón", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Balcón",
+        "Minibar"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite12.jpg"],
+      "fotos": [
+        "suite12.jpg"
+      ],
       "activo": true
     },
     {
@@ -1160,9 +1199,17 @@
       "tipo": "Deluxe",
       "descripcion": "Suite ejecutiva de lujo",
       "precio_base": 410.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Sala de negocios", "Servicio concierge"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Sala de negocios",
+        "Servicio concierge"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["deluxe12.jpg"],
+      "fotos": [
+        "deluxe12.jpg"
+      ],
       "activo": true
     },
     {
@@ -1171,9 +1218,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación moderna con K-tech",
       "precio_base": 145.0,
-      "servicios_incluidos": ["WiFi 5G", "TV smart", "Aire acondicionado", "Karaoke"],
+      "servicios_incluidos": [
+        "WiFi 5G",
+        "TV smart",
+        "Aire acondicionado",
+        "Karaoke"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["seul1.jpg"],
+      "fotos": [
+        "seul1.jpg"
+      ],
       "activo": true
     },
     {
@@ -1182,9 +1236,17 @@
       "tipo": "Suite",
       "descripcion": "Suite K-pop con equipo de entretenimiento",
       "precio_base": 280.0,
-      "servicios_incluidos": ["WiFi 5G", "TV smart", "Aire acondicionado", "Karaoke premium", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi 5G",
+        "TV smart",
+        "Aire acondicionado",
+        "Karaoke premium",
+        "Minibar"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite13.jpg"],
+      "fotos": [
+        "suite13.jpg"
+      ],
       "activo": true
     },
     {
@@ -1193,9 +1255,17 @@
       "tipo": "Deluxe",
       "descripcion": "Suite VIP con acceso privado",
       "precio_base": 520.0,
-      "servicios_incluidos": ["WiFi 5G", "TV smart", "Aire acondicionado", "Karaoke VIP", "Spa coreano"],
+      "servicios_incluidos": [
+        "WiFi 5G",
+        "TV smart",
+        "Aire acondicionado",
+        "Karaoke VIP",
+        "Spa coreano"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["deluxe13.jpg"],
+      "fotos": [
+        "deluxe13.jpg"
+      ],
       "activo": true
     },
     {
@@ -1204,9 +1274,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con vista a la Ópera",
       "precio_base": 155.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["sydney1.jpg"],
+      "fotos": [
+        "sydney1.jpg"
+      ],
       "activo": true
     },
     {
@@ -1215,9 +1292,17 @@
       "tipo": "Suite",
       "descripcion": "Suite con balcón frente a la Ópera",
       "precio_base": 290.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Balcón", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Balcón",
+        "Minibar"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite14.jpg"],
+      "fotos": [
+        "suite14.jpg"
+      ],
       "activo": true
     },
     {
@@ -1226,9 +1311,17 @@
       "tipo": "Deluxe",
       "descripcion": "Penthouse con vista 360 grados",
       "precio_base": 530.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Jacuzzi", "Terraza panorámica"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Jacuzzi",
+        "Terraza panorámica"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["penthouse14.jpg"],
+      "fotos": [
+        "penthouse14.jpg"
+      ],
       "activo": true
     },
     {
@@ -1237,9 +1330,16 @@
       "tipo": "Estándar",
       "descripcion": "Habitación con acceso a mercados nocturnos",
       "precio_base": 105.0,
-      "servicios_incluidos": ["WiFi", "TV", "Aire acondicionado", "Minibar"],
+      "servicios_incluidos": [
+        "WiFi",
+        "TV",
+        "Aire acondicionado",
+        "Minibar"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["taipei1.jpg"],
+      "fotos": [
+        "taipei1.jpg"
+      ],
       "activo": true
     },
     {
@@ -1248,9 +1348,17 @@
       "tipo": "Suite",
       "descripcion": "Suite con vista a templos",
       "precio_base": 215.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Minibar", "Espacio meditación"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Minibar",
+        "Espacio meditación"
+      ],
       "capacidad_maxima": 4,
-      "fotos": ["suite15.jpg"],
+      "fotos": [
+        "suite15.jpg"
+      ],
       "activo": true
     },
     {
@@ -1259,14 +1367,86 @@
       "tipo": "Deluxe",
       "descripcion": "Suite de lujo con baño de agua caliente",
       "precio_base": 440.0,
-      "servicios_incluidos": ["WiFi premium", "TV smart", "Aire acondicionado", "Baño de agua caliente", "Terraza"],
+      "servicios_incluidos": [
+        "WiFi premium",
+        "TV smart",
+        "Aire acondicionado",
+        "Baño de agua caliente",
+        "Terraza"
+      ],
       "capacidad_maxima": 2,
-      "fotos": ["deluxe15.jpg"],
+      "fotos": [
+        "deluxe15.jpg"
+      ],
       "activo": true
     }
   ],
-  "clientes": [],
-  "reservas": [],
+  "clientes": [
+    {
+      "id": "350ac9e0-a661-4a04-8e23-4f1a3810d1ee",
+      "nombre_completo": "Test User",
+      "telefono": "+57 3000000000",
+      "correo_encriptado": "33M-Ywe7fkz40X5zh0hqKg==",
+      "direccion": "Calle 1"
+    },
+    {
+      "id": "3170243c-1823-4ede-96f8-1ce408449a6f",
+      "nombre_completo": "Jhon Sebastian Lema Montoya",
+      "telefono": "3114893930",
+      "correo_encriptado": "2HMvdjS0bkL7zXd7yEZqKaG0pyTuYZE9sAS0HLjdYVc=",
+      "direccion": "Calle10a #45s15"
+    },
+    {
+      "id": "ba068391-c915-4bb3-b4eb-526819c92889",
+      "nombre_completo": "Jhon Sebastian Lema Montoya",
+      "telefono": "3114893930",
+      "correo_encriptado": "2HMvdjS0bkL7zXd7yEZqKaG0pyTuYZE9sAS0HLjdYVc=",
+      "direccion": "Calle10a #45s15"
+    },
+    {
+      "id": "9d162d40-ee56-4ef4-9643-0e1ed5f6e951",
+      "nombre_completo": "Jhon Sebastian Lema Montoya",
+      "telefono": "3114893930",
+      "correo_encriptado": "2HMvdjS0bkL7zXd7yEZqKaG0pyTuYZE9sAS0HLjdYVc=",
+      "direccion": "Calle10a #45s15"
+    }
+  ],
+  "reservas": [
+    {
+      "id": "0990e78e-7021-4864-ab9a-e0262b73672f",
+      "cliente_id": "3170243c-1823-4ede-96f8-1ce408449a6f",
+      "hotel_id": "550e8400-e29b-41d4-a716-446655440001",
+      "habitación_id": "hab-hotel1-001",
+      "fecha_inicio": "2026-05-10",
+      "fecha_fin": "2026-05-17",
+      "huespedes": 1,
+      "temporada": "baja",
+      "precio_calculado": 864.0,
+      "estado": "confirmada",
+      "pago_estado": "confirmado",
+      "metodo_pago": "tarjeta",
+      "token_pago_encriptado": "mCd6J3XqNU64kCokmgYxIrG-83zpNel37Aa4RKaGOg6Sd3txfeYwGbuRKCSZGTNq5e_zdOgH4WrnVu1KpIwgD50ueiB_",
+      "monto_reembolso": 0.0,
+      "creado_en": "2026-04-17T00:30:22.572145"
+    },
+    {
+      "id": "14bcb6a5-ac71-4a83-98b7-147de496d464",
+      "cliente_id": "9d162d40-ee56-4ef4-9643-0e1ed5f6e951",
+      "hotel_id": "550e8400-e29b-41d4-a716-446655440001",
+      "habitación_id": "hab-hotel1-002",
+      "fecha_inicio": "2026-05-10",
+      "fecha_fin": "2026-05-17",
+      "huespedes": 1,
+      "temporada": "baja",
+      "precio_calculado": 1440.0,
+      "estado": "confirmada",
+      "pago_estado": "confirmado",
+      "metodo_pago": "tarjeta",
+      "token_pago_encriptado": "knJ8IXW6Mh24xHcjnwYxIrPv83zpZ-J37QDsFfKLaAzOL3gmfe8yGaWPIiybGzdx-OvqaO5khWrtX-lFrI0-FJIheCVz5g==",
+      "monto_reembolso": 0.0,
+      "creado_en": "2026-04-17T00:45:30.976039"
+    }
+  ],
   "comentarios": [],
   "usuarios": [
     {
