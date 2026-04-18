@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<section class="banner">
+  <div>
+    <h2 style="margin-top:0">Resultados de búsqueda</h2>
+    <p style="margin-bottom:0">Filtra por fecha, ubicación, precio y calificación.</p>
+  </div>
+  <img src="/static/paris.png" alt="Búsqueda" />
+</section>
+
+<form method="post" action="/buscar" class="tarjeta" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+  <input type="date" name="fecha_inicio" value="{{ filtros.fecha_inicio }}" required />
+  <input type="date" name="fecha_fin" value="{{ filtros.fecha_fin }}" required />
+  <input name="ubicacion" placeholder="Ubicación" value="{{ filtros.ubicacion }}" />
+  <input type="number" step="0.01" name="precio_max" placeholder="Precio máximo" value="{{ filtros.precio_max }}" />
+  <input type="number" step="0.01" name="calificacion_min" placeholder="Calificación mínima" value="{{ filtros.calificacion_min }}" />
+  <button class="boton-principal" type="submit">Buscar</button>
+</form>
+
+{% if error_busqueda %}
+  <div class="tarjeta" style="border-color:#e57373; background:rgba(229,115,115,0.15);">
+    {{ error_busqueda }}
+  </div>
+{% endif %}
+
+{% if resultados %}
+  <h3>{{ resultados|length }} resultado(s)</h3>
+  <div style="display:grid; gap:10px;">
+    {% for r in resultados %}
+      <article class="tarjeta" style="display:grid; grid-template-columns: 220px 1fr; gap:12px; align-items:center;">
+        {% if r.imagen_url %}
+          <img src="{{ r.imagen_url }}" alt="{{ r.hotel_nombre }}" style="height:130px; object-fit:cover;" />
+        {% endif %}
+        <div>
+          <h4 style="margin:0 0 8px 0;">{{ r.hotel_nombre }} · {{ r.tipo }}</h4>
+          <div class="fila" style="margin-bottom:8px;">
+            <span>Ubicación: {{ r.ubicacion }}</span>
+            <span>Precio estimado: ${{ r.precio_estimado }}</span>
+            <span>Calif. habitación: {{ r.habitación_rating }}/5</span>
+            <span>Calif. hotel: {{ r.hotel_rating }}/5</span>
+          </div>
+          <a class="boton-secundario" href="/hotel/{{ r.hotel_id }}">Ver hotel y reservar</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% elif filtros.fecha_inicio and filtros.fecha_fin and not error_busqueda %}
+  <p>No encontramos habitaciones con esos filtros.</p>
+{% else %}
+  <p>Completa el formulario para buscar habitaciones disponibles.</p>
+{% endif %}
+{% endblock %}
